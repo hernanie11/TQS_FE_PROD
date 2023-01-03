@@ -1,0 +1,45 @@
+<div *ngIf="data.action == 'CreateBusinessModel'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Store Code</mat-label>
+            <input [(ngModel)]="businessModel" matInput autocomplete="off" class="upper-case" (keydown.enter)="createBusinessModel()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button (click)="createBusinessModel()" mat-raised-button class="btn-primary" [disabled]="isCreating || validateCreate()"
+            [class.spinner]="isCreating">{{buttonCreate}}</button>
+        <button mat-raised-button (click)="cancelCreate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'UpdateBusinessModel'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Store Code</mat-label>
+            <input [(ngModel)]="businessModel" matInput autocomplete="off" class="upper-case" (keydown.enter)="updateBusinessModel()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isUpdating || validateUpdate()"
+            [class.spinner]="isUpdating" (click)="updateBusinessModel()">{{buttonUpdate}}</button>
+        <button mat-raised-button (click)="cancelUpdate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'DeleteBusinessModel'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+    {{data.question}}
+    
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isDeleting"
+            [class.spinner]="isDeleting" (click)="deleteBusinessModel()">{{buttonDelete}}</button>
+        <button mat-raised-button (click)="cancelDelete()">Cancel</button>
+    </mat-dialog-actions>
+</div>

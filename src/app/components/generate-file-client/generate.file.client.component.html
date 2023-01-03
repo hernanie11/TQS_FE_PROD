@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="title-container">
+    <div class="title">
+      <button mat-icon-button>
+        <mat-icon></mat-icon>
+      </button>
+      <div class="title">
+        Generate File
+      </div>
+    </div>
+    <div class="sub-title">{{getStoreName()}}</div>
+  </div>
+
+  <!-- <div class="form-container">
+        <section class="example-section">
+            <span class="example-list-section">
+              <mat-checkbox class="example-margin"
+                            [checked]="allComplete"
+                            [color]="task.color"
+                            [indeterminate]="someComplete()"
+                            (change)="setAll($event.checked)">
+                {{task.name}}
+              </mat-checkbox>
+            </span>
+            <span class="example-list-section">
+              <ul>
+                <li *ngFor="let subtask of task.subtasks">
+                  <mat-checkbox [(ngModel)]="subtask.completed"
+                                [color]="subtask.color"
+                                (ngModelChange)="updateAllComplete()">
+                    {{subtask.name}}
+                  </mat-checkbox>
+                </li>
+              </ul>
+            </span>
+          </section>
+    </div> -->
+
+
+  <div class="form-container">
+    <!-- <button (click)="generateFile()" class="btn-primary" mat-raised-button>Generate File</button>  -->
+    <button mat-fab (click)="generateFile()">
+      <mat-icon>download</mat-icon>
+    </button>
+  </div>
+
+</div>

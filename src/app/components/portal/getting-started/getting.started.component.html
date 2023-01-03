@@ -1,0 +1,24 @@
+<div id="container">
+    <div class="img-container">
+        <img src="../../../../assets/sidebar-logo/q_system_logo6.png" alt="">
+    </div>
+    <div class="col-items">
+        Welcome to the TQS installation process!. Just click the get started button bellow and you'll be on your way to using the most extendable and powerful loyalty system.
+    </div>
+    <div class="col-items">
+        TQ-System is an application that is use for earning and redeeming of Loyalty Points. It has a function where you can view your earned loyalty points and use the collected points as a payment in your next transaction.
+    </div>
+    <div class="col-items action">
+        <button 
+            mat-raised-button 
+            class="btn-primary" 
+            (click)="getStarted()"
+            [disabled]="gettingStarted"
+            [class.spinner]="gettingStarted"
+        >{{buttonName}}</button>
+        <button mat-raised-button class="btn-accent">Documentation</button>
+    </div>
+    <div class="note" *ngIf="!appService.isServerStarted">
+        Server is not running.
+    </div>
+</div>

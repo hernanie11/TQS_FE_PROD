@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="title">
+    <mat-icon aria-hidden="false" aria-label="Example home icon">table</mat-icon>
+    {{title}}
+  </div>
+  <div class="actions">
+    <button mat-raised-button [disabled]="validateActions()" class="btn-primary" (click)="exportToExcel()">Export to Excel</button>
+    <button mat-raised-button [disabled]="validateActions()" class="btn-accent" (click)="exportToCSV()">Export to CSV</button>
+    <button mat-raised-button [disabled]="validateActions()" (click)="copyToClipboard()" [cdkCopyToClipboard]="stringtifyDataSource()">Copy to Clipboard</button>
+    <mat-form-field appearance="legacy" class="search" color="accent">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" (keyup)="applyFilter($event)" autocomplete="off">
+    </mat-form-field>
+  </div>
+  <div class="table-container">
+    <table mat-table [dataSource]="reportsServices.earnedPointsReportDataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell class="id" *matCellDef="let earnedPoint"> {{earnedPoint.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="storeName">
+        <th mat-header-cell *matHeaderCellDef> Store </th>
+        <td mat-cell class="receipt-number" *matCellDef="let earnedPoint"> {{earnedPoint.store_name}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="receiptNumber">
+        <th mat-header-cell *matHeaderCellDef> Receipt # </th>
+        <td mat-cell class="receipt-number" *matCellDef="let earnedPoint"> {{earnedPoint.transaction_no}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Category </th>
+        <td mat-cell class="category" *matCellDef="let earnedPoint"> {{earnedPoint.category}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell class="first-name" *matCellDef="let earnedPoint"> {{earnedPoint.first_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell class="last-name" *matCellDef="let earnedPoint"> {{earnedPoint.last_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="mobileNumber">
+        <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+        <td mat-cell class="mobile-number" *matCellDef="let earnedPoint"> {{earnedPoint.mobile_number}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell class="amount" *matCellDef="let earnedPoint"> {{earnedPoint.amount | currency:' '}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="earnedPoints">
+        <th mat-header-cell *matHeaderCellDef> Earned Points </th>
+        <td mat-cell class="earned-points" *matCellDef="let earnedPoint"> {{earnedPoint.points_earn}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell class="status" *matCellDef="let earnedPoint"> {{earnedPoint.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="isVoided">
+        <th mat-header-cell *matHeaderCellDef> Void Status </th>
+        <td mat-cell class="status" *matCellDef="let earnedPoint"> {{earnedPoint.void_status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateEarned">
+        <th mat-header-cell *matHeaderCellDef> Date Earned </th>
+        <td mat-cell class="date-earned" *matCellDef="let earnedPoint"> {{earnedPoint.transaction_datetime | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateSynched">
+        <th mat-header-cell *matHeaderCellDef> Date Synched </th>
+        <td mat-cell class="date-synched" *matCellDef="let earnedPoint"> {{earnedPoint.created_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateCleared">
+        <th mat-header-cell *matHeaderCellDef> Date Cleared </th>
+        <td mat-cell class="date-cleared" *matCellDef="let earnedPoint"> {{earnedPoint.cleared_datetime | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="voidedAt">
+        <th mat-header-cell *matHeaderCellDef> Void Store Date </th>
+        <td mat-cell class="date-synched" *matCellDef="let earnedPoint"> {{earnedPoint.voided_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="14">No data</td>
+      </tr>
+    </table>
+    
+  </div>
+  <mat-paginator #earnedPointsPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>

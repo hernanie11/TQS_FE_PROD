@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="title">ADDRESS</div>
+    <div class="field-address-container">
+        <div [formGroup]="membersRegisterServices.addressForm" class="required-fields">
+            <!-- <mat-form-field appearance="legacy">
+                <mat-label>PROVINCE</mat-label>
+                <input #txtProvince [OnlyLetter] matInput autocomplete="off" class="upper-case" [(ngModel)]="membersRegisterServices.province">
+            </mat-form-field> -->
+            <!-- <form [formGroup]="addressForm"> -->
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Province</mat-label>
+                    <mat-select #cbProvinces formControlName="province" (selectionChange)="populateMunicipality()">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="ProvinceFilterCtrl"
+                                placeholderLabel="{{provincePlaceHolder}}"
+                                noEntriesFoundLabel="'no matching Province'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredProvince | async" [value]="item.prov_code">
+                            {{item.prov_desc | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Municipality</mat-label>
+                    <mat-select formControlName="municipality" (selectionChange)="populateBarangay()">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="MunicipalityFilterCtrl"
+                                placeholderLabel="{{municipalityPlaceHolder}}"
+                                noEntriesFoundLabel="'no matching Municipality'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredMunicipality | async" [value]="item.citymun_code">
+                            {{item.citymun_desc | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Barangay</mat-label>
+                    <mat-select formControlName="barangay" >
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="BarangayFilterCtrl"
+                                placeholderLabel="{{barangayPlaceHolder}}"
+                                noEntriesFoundLabel="'no matching Barangay'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredBarangay | async" [value]="item.brgy_desc">
+                            {{item.brgy_desc | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="legacy">
+                    <mat-label>MUNICIPALITY</mat-label>
+                    <input [OnlyLetter] matInput autocomplete="off" class="upper-case"
+                        [(ngModel)]="membersRegisterServices.municipality">
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>BARANGAY</mat-label>
+                    <input matInput autocomplete="off" class="upper-case"
+                        [(ngModel)]="membersRegisterServices.barangay">
+                </mat-form-field> -->
+            <!-- </form> -->
+        </div>
+        <div class="border"></div>
+        <div class="optional-fields">
+            <div class="sub-title ">(OPTIONAL)</div>
+            <mat-form-field appearance="legacy">
+                <mat-label>PUROK</mat-label>
+                <input matInput autocomplete="off" class="upper-case" [(ngModel)]="membersRegisterServices.purok">
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>STREET NAME</mat-label>
+                <input matInput autocomplete="off" class="upper-case" [(ngModel)]="membersRegisterServices.street_name">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="actions">
+        <button mat-raised-button (click)="back()">Back</button>
+        <button [disabled]="validateFields()" mat-raised-button class="btn-primary" (click)="next()">Next</button>
+    </div>
+</div>

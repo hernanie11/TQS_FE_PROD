@@ -1,0 +1,92 @@
+@import "../../../shared/scss/theme";
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .btn-upload {
+        margin-left: 20px;
+    }
+    mat-form-field {
+        margin-left: auto;
+        margin-right: 20px;
+        width: 300px;
+        width: 250px;
+        color: white;
+    }
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 20px;
+
+    .voided {
+        text-decoration: line-through;
+        color: red;
+    }
+
+    .status-changed {
+        padding: 2px;
+        border-radius: 5px;
+        background-color: $secondary;
+        color: white;
+    }
+    .password-reset-icon {
+        position: relative;
+        top: 6px;
+    }
+
+    .select {
+        min-width: 40px;
+    }
+    .id {
+        min-width: 40px;
+    }
+
+    .transaction-no {
+        min-width: 100px;
+    }
+
+    .category {
+        min-width: 100px;
+    }
+
+    .first-name {
+        min-width: 100px;
+    }
+
+    .last-name {
+        min-width: 100px;
+    }
+
+    .points-earn {
+        min-width: 100px;
+    }
+    .transaction-datetime {
+        min-width: 180px;
+    }
+
+    .mobile-number {
+        min-width: 100px;
+    }
+
+    .amount {
+        min-width: 100px;
+    }
+
+    .status {
+        min-width: 100px;
+    }
+
+    .created-at {
+        min-width: 180px;
+    }
+    .actions {
+        min-width: 100px;
+    }
+}
+

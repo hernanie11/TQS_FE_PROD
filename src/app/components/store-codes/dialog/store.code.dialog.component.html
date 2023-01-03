@@ -1,0 +1,44 @@
+<div *ngIf="data.action == 'CreateStoreCode'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Store Code</mat-label>
+            <input [(ngModel)]="storeCode" matInput autocomplete="off" class="upper-case" (keydown.enter)="createStoreCode()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button (click)="createStoreCode()" mat-raised-button class="btn-primary" [disabled]="isCreatingStoreCode || validateCreate()"
+            [class.spinner]="isCreatingStoreCode">{{buttonName}}</button>
+        <button mat-raised-button (click)="cancel()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'UpdateStoreCode'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Store Code</mat-label>
+            <input [(ngModel)]="storeCode" matInput autocomplete="off" class="upper-case" (keydown.enter)="updateStoreCode()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isUpdatingStoreCode || validateUpdate()"
+            [class.spinner]="isUpdatingStoreCode" (click)="updateStoreCode()">{{updateButtonName}}</button>
+        <button mat-raised-button (click)="cancelUpdate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'DeleteStoreCode'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+    {{data.question}}
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isDeletingStoreCode"
+            [class.spinner]="isDeletingStoreCode" (click)="deleteStoreCode()">{{deleteButtonName}}</button>
+        <button mat-raised-button (click)="cancelDelete()">Cancel</button>
+    </mat-dialog-actions>
+</div>

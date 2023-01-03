@@ -1,0 +1,110 @@
+<app-admin-container [title]="title">
+    <div new id="container">
+        <form [formGroup]="userAccountForm" (submit)="create()">
+            <div class="name">
+                <mat-form-field appearance="legacy" color="accent">
+                    <mat-label>First Name</mat-label>
+                    <input 
+                        (change)="convertAccessPermission()"
+                        autofocus 
+                        matInput 
+                        autocomplete="off"
+                        formControlName="first_name"
+                        class="upper-case"
+                        >
+                        <mat-error *ngIf="inputControl('first_name').errors?.['required']">
+                            First Name is required
+                        </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy" color="accent">
+                    <mat-label>Last Name</mat-label>
+                    <input 
+                        (change)="convertAccessPermission()"
+                        matInput 
+                        autocomplete="off"
+                        formControlName="last_name"
+                        class="upper-case"
+                        >
+                        <mat-error *ngIf="inputControl('last_name').errors?.['required']">
+                            Last Name is required
+                        </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="cred">
+                <mat-form-field appearance="legacy" color="accent">
+                    <mat-label>User Name</mat-label>
+                    <input 
+                        (change)="convertAccessPermission()"
+                        matInput 
+                        autocomplete="off"
+                        formControlName="username"
+                        class="upper-case"
+                        >
+                        <mat-error *ngIf="inputControl('username').errors?.['required']">
+                            User Name is required
+                        </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy" color="accent">
+                    <mat-label>Password</mat-label>
+                    <input 
+                        (change)="convertAccessPermission()"
+                        matInput 
+                        type="password" 
+                        autocomplete="off"
+                        formControlName="password"
+                        >
+                        <mat-error *ngIf="inputControl('password').errors?.['required']">
+                            Password is required
+                        </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="role-permission">
+                <label for="">Role</label>
+                <mat-radio-group formControlName="role" (change)="resetPermissions()">
+                    <mat-radio-button value="admin" [checked]=true>Admin</mat-radio-button>
+                    <mat-radio-button value="cashier">Store</mat-radio-button>
+                </mat-radio-group>
+                <label *ngIf="getRole() == 'admin' || getRole() == 'cashier'"  for="">Permissions</label>
+                
+                <div *ngIf="getRole() == 'admin'" class="permissions" formGroupName="access_permission">
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="user_accounts" value="user-accounts">User Accounts</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="stores" value="stores">Stores</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="members" value="members">Members</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="earned_points" value="earned-points">Earned Points</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="redeemed_points" value="redeemed-points">Redeemed Points</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="cleared_points" value="cleared-points">Cleared Points</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="generate_file" value="generate-file">Generate File</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="update_file" value="update-file">Update File</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="reports" value="reports">Reports</mat-checkbox>
+                </div>
+               
+
+                <div *ngIf="getRole() == 'cashier'" class="permissions" formGroupName="access_permission">
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="members" value="members">Members</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="earning" value="earning">Earning</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="redeeming" value="redeeming">Redeeming</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="transactions" value="transactions">Transactions</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="generate_file" value="generate-file">Generate File</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="update_file" value="update-file">Update File</mat-checkbox>
+                    <mat-checkbox (change)="convertAccessPermission()" formControlName="change_store" value="change-store">Change Store</mat-checkbox>
+                </div>
+                <div>
+                    <mat-error *ngIf="permissions.length == 0">
+                        Select Permissions
+                    </mat-error>
+                </div>
+            </div>
+            <div class="actions">
+                <button 
+                    mat-raised-button 
+                    class="btn-primary"
+                    [disabled]="formValidation()"
+                    >Create</button>
+                <button type="reset" mat-raised-button color="warn">Reset</button>
+                <button type="button" mat-raised-button (click)="back()">Back</button>
+            </div>
+        </form>
+    </div>
+</app-admin-container>

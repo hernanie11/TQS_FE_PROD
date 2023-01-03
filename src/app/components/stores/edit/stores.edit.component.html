@@ -1,0 +1,178 @@
+<app-admin-container [title]="title">
+    <div new id="container">
+        <ng-container *ngIf="isGettingStoreById; else elseTemplate">
+            <div class="loader">
+                <ngx-skeleton-loader count="5" appearance="circle" animation="pulse"></ngx-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <form [formGroup]="storeForm" (submit)="update()">
+                <div class="code">
+                    <!-- <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Code</mat-label>
+                        <input UpperCase formControlName="code" class="upper-case" autofocus matInput
+                            autocomplete="off">
+                    </mat-form-field> -->
+                    <mat-form-field class="upper-case" color="accent">
+                        <mat-label>Branch Code</mat-label>
+                        <mat-select formControlName="code">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="StoreCodeFilterCtrl"
+                                    placeholderLabel="{{storeCodePlaceHolder}}"
+                                    noEntriesFoundLabel="'no matching Store Code'">
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of filteredStoreCodes | async" [value]="item.store_code">
+                                {{item.store_code | uppercase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Branch Name</mat-label>
+                        <input Capitalize formControlName="name" class="upper-case" autofocus matInput
+                            autocomplete="off">
+                    </mat-form-field>
+                </div>
+
+                <div class="location">
+                    <!-- <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Area</mat-label>
+                        <input Capitalize formControlName="area" class="capitalize" autofocus matInput
+                            autocomplete="off">
+                    </mat-form-field> -->
+                    <mat-form-field class="upper-case" color="accent">
+                        <mat-label>Area</mat-label>
+                        <mat-select formControlName="area">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="AreasFilterCtrl"
+                                    placeholderLabel="{{areaPlaceHolder}}" noEntriesFoundLabel="'no matching Area'">
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of filteredAreas | async" [value]="item.area">
+                                {{item.area | uppercase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field appearance="fill" color="accent">
+                        <mat-label>Region</mat-label>
+                        <mat-select formControlName="region">
+                            <mat-option *ngFor="let region of regions" [value]="region">
+                                {{region}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <mat-form-field class="upper-case" color="accent">
+                        <mat-label>Region</mat-label>
+                        <mat-select formControlName="region">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="RegionFilterCtrl"
+                                    placeholderLabel="{{regionPlaceHolder}}" noEntriesFoundLabel="'no matching Region'">
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of filteredRegion | async" [value]="item.region">
+                                {{item.region | uppercase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="category">
+                    <!-- <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Cluster</mat-label>
+                        <input Capitalize formControlName="cluster" class="capitalize" autofocus matInput
+                            autocomplete="off">
+                    </mat-form-field> -->
+                    <mat-form-field class="upper-case" color="accent">
+                        <mat-label>Cluster</mat-label>
+                        <mat-select formControlName="cluster">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="ClustersFilterCtrl"
+                                    placeholderLabel="{{clusterPlaceHolder}}"
+                                    noEntriesFoundLabel="'no matching Cluster'">
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of filteredClusters | async" [value]="item.cluster">
+                                {{item.cluster | uppercase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    <!-- <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Business Model</mat-label>
+                        <mat-select formControlName="business_model">
+                            <mat-option value="FO">FO</mat-option>
+                            <mat-option value="FOX">FOX</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <mat-form-field class="upper-case" color="accent">
+                        <mat-label>Business Models</mat-label>
+                        <mat-select formControlName="business_model">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="BusinessModelFilterCtrl"
+                                    placeholderLabel="{{businessModelPlaceHolder}}"
+                                    noEntriesFoundLabel="'no matching Business Model'">
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of filteredBusinessModel | async" [value]="item.name">
+                                {{item.name | uppercase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="tokens">
+                    <div class="token-actions">
+                        <button type="button" (click)="generateNewToken()" mat-icon-button class="primary"
+                            matTooltip="Generate New Token">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                    <table #tblToken mat-table [dataSource]="dtToken" class="mat-elevation-z8">
+                        <ng-container matColumnDef="token">
+                            <th mat-header-cell *matHeaderCellDef> Token </th>
+                            <td class="token" mat-cell *matCellDef="let element"> {{element.token}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td class="status" mat-cell *matCellDef="let element"> 
+                                <ng-container *ngIf="element.is_actived; else elseTemplate">
+                                    <label [class.inused]="element.is_actived">Inused</label>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <label [class.unused]="!element.is_actived">Unused</label>
+                                </ng-template>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions" stickyEnd>
+                            <th mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td class="action" mat-cell *matCellDef="let element">
+                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu"
+                                    aria-label="Example icon-button with a menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button (click)="copyToken()" mat-menu-item [cdkCopyToClipboard]="element.token">
+                                        <mat-icon>content_copy</mat-icon>
+                                        <span>Copy</span>
+                                    </button>
+                                    <button (click)="removeToken(element.id)" mat-menu-item>
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Remove</span>
+                                    </button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsToken"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsToken;"></tr>
+                    </table>
+                </div>
+                <div class="actions">
+                    <button mat-raised-button class="btn-primary"
+                        [disabled]="formValidation() || !ifSomethingToChangeValue()">{{btnAction}}</button>
+                    <!-- <button type="button" mat-raised-button class="btn-danger" (click)="reset()">Reset</button> -->
+                    <button mat-raised-button (click)="back()">Back</button>
+                </div>
+            </form>
+        </ng-template>
+    </div>
+</app-admin-container>

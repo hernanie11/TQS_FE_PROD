@@ -1,0 +1,16 @@
+<div *ngIf="data.action == 'SaveSetting'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isButtonLoading"
+        [class.spinner]="isButtonLoading"
+        (click)="save()"
+        >{{buttonName}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>

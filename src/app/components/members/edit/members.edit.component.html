@@ -1,0 +1,125 @@
+<app-admin-container [title]="title">
+    <div new id="container">
+        <ng-container *ngIf="isGettingStoreById; else elseTemplate">
+            <div class="loader">
+                <ngx-skeleton-loader count="5" appearance="circle" animation="pulse" ></ngx-skeleton-loader>
+            </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <form [formGroup]="memberForm" (submit)="update()">
+                <div class="name">
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>First Name</mat-label>
+                        <input autofocus matInput autocomplete="off" formControlName="first_name" class="capitalize">
+                        <mat-error *ngIf="inputControl('first_name').errors?.['required']">
+                            First Name is required
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput autocomplete="off" formControlName="last_name" class="capitalize">
+                        <mat-error *ngIf="inputControl('last_name').errors?.['required']">
+                            Last Name is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="gender-bday">
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender">
+                            <mat-option value="male">Male</mat-option>
+                            <mat-option value="female">Female</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="inputControl('gender').errors?.['required']">
+                            Gender is required
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Birthday</mat-label>
+                        <input matInput view="date"    min-view="date"  format="yyyy-MM-dd" [matDatepicker]="picker" formControlName="birthday" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="inputControl('birthday').errors?.['required']">
+                            Birthday is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="address">
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Barangay</mat-label>
+                        <input matInput autocomplete="off" formControlName="barangay" class="capitalize">
+                        <mat-error *ngIf="inputControl('barangay').errors?.['required']">
+                            Barangay is required
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Municipality</mat-label>
+                        <input matInput autocomplete="off" formControlName="municipality" class="capitalize">
+                        <mat-error *ngIf="inputControl('municipality').errors?.['required']">
+                            Municipality is required
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Province</mat-label>
+                        <input matInput autocomplete="off" formControlName="province" class="capitalize">
+                        <mat-error *ngIf="inputControl('province').errors?.['required']">
+                            Province is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="contact">
+                    <mat-form-field class="upper-case" color="accent">
+                        <mat-label>Registered Store</mat-label>
+                        <mat-select formControlName="store_id">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="StoreFilterCtrl"
+                                    placeholderLabel="{{storesPlaceHolder}}" noEntriesFoundLabel="'no matching Store'">
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let item of filteredStores | async" [value]="item.id">
+                                {{item.name | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Email</mat-label>
+                        <input matInput autocomplete="off" formControlName="email">
+                        <mat-error *ngIf="inputControl('email').status == 'INVALID'">
+                            <ng-container *ngIf="inputControl('email').errors?.['required']; else elseTemplate">
+                                Email is required
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                Email is not valid
+                            </ng-template>
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="legacy" color="accent">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput 
+                        [specialCharacters]="[ '[' ,']' , '-' ]" mask="0000-000-0000"
+                        [OnlyNumber] autocomplete="off" min="11" max="11" formControlName="mobile_number">
+                        <mat-error *ngIf="inputControl('mobile_number').status == 'INVALID'">
+                            <ng-container *ngIf="inputControl('mobile_number').errors?.['required']; else elseTemplate">
+                                Mobile is required
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                Mobile Number must be 11 digits
+                            </ng-template>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="actions">
+                    <button mat-raised-button class="btn-primary" [disabled]="formValidation() || !ifSomethingToChangeValue()">{{btnAction}}</button>
+                    <button type="reset" mat-raised-button color="warn">Reset</button>
+                    <button type="button" mat-raised-button (click)="back()">Back</button>
+                </div>
+            </form>
+        </ng-template>
+    </div>
+</app-admin-container>

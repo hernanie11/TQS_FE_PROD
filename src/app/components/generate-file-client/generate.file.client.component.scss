@@ -1,0 +1,77 @@
+@import "../../shared/scss/theme";
+.container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    padding: 30px 50px;
+    grid-gap: 10px;
+  
+    .title-container {
+        grid-column: 1/25;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        grid-gap: 5px;
+        .title {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 24px;
+            font-weight:900;
+            letter-spacing: 1px;
+        }
+        .sub-title {
+            display: flex;
+            flex-direction: row;
+            padding-left: 40px;
+            color: $secondary;
+        }
+    }
+    
+    .form-container {
+        background-color: #1d1b1b;
+        grid-column: 5/21;
+        grid-row: 2;
+        height: calc(100vh - 280px);
+        border-radius: 1em;
+        ul {
+            list-style-type: none;
+            margin-top: 4px;
+        }
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+   
+
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: $secondary !important;
+}
+  
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: $secondary !important;
+} 
+  
+::ng-deep.mat-form-field-ripple {
+    background-color: $secondary !important;;
+}

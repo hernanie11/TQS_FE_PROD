@@ -1,0 +1,17 @@
+<div class="container">
+    <form [formGroup]="fileUploadForm" (submit)="import()" enctype="multipart/form-data">
+        <mat-form-field appearance="legacy">
+            <mat-label>Select json file to import</mat-label>
+            <ngx-mat-file-input color="accent" accept=".json" formControlName="storeFiles">
+            </ngx-mat-file-input>
+        </mat-form-field>
+        <div class="select-file-actions">
+            <button [disabled]="isUploading || !fileUploadForm.valid || buttonUpload != 'Upload'" mat-raised-button class="btn-primary">
+                {{buttonUpload}}
+            </button>
+            <button type="button" (click)="cancelOrReset()" mat-raised-button>{{buttonCancel}}</button>
+        </div>
+        <mat-progress-bar *ngIf="isUploading" color="accent" mode="buffer"></mat-progress-bar>
+
+    </form>
+</div>

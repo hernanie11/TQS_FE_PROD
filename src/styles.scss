@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./app/shared/scss/theme";
+@import "./app/shared/scss/btn";
+
+@import "./app/shared/scss/table";
+@import "./app/shared/scss/spinner";
+@import "./app/shared/scss/input";
+@import "./app/shared/scss/dialog";
+@import "./app/shared/scss/tooltip";
+@import "./app/shared/scss/scroll";
+@import "./app/shared/scss/header";
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, 
+    "Helvetica Neue", sans-serif;  
+    
+}

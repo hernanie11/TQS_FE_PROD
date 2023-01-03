@@ -1,0 +1,117 @@
+@import "../../../shared/scss/theme";
+@import "../../../shared/scss/header";
+.container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    padding: 30px 50px;
+    grid-gap: 10px;
+  
+    .title-container {
+        grid-column: 1/25;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        grid-gap: 5px;
+        .title {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            // font-size: 24px;
+            font-size: $titleSize;
+            font-weight:900;
+            letter-spacing: 1px;
+        }
+        .sub-title {
+            display: flex;
+            flex-direction: row;
+            padding-left: 40px;
+            color: $secondary;
+            font-size: $subTitleSize;
+        }
+    }
+    
+    .form-container {
+        background-color: #1d1b1b;
+        grid-column: 5/21;
+        grid-row: 2;
+        min-height: calc(100vh - 230px);
+        border-radius: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        // gap: 10px;
+        mat-form-field {
+            width: 350px;
+            font-size: 18px;
+        }
+        @media only screen and (max-width: 890px) {
+            mat-form-field {
+                width: 80%;
+            }
+        }
+        .earned-points {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+            width: 350px;
+            font-weight: 100;
+            font-size: 18px;
+            margin: 10px 0px 5px;
+            // border: 1px solid white;
+            @media only screen and (max-width: 890px) {
+                width: 80%;
+            }
+        }
+        .actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+            button {
+                width: 100%;
+            }
+            @media only screen and (max-width: 890px) {
+                width: 80%;
+            }
+            width: 350px;
+        }
+       
+    }
+
+ 
+
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: $secondary !important;
+}
+  
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: $secondary !important;
+} 
+  
+::ng-deep.mat-form-field-ripple {
+    background-color: $secondary !important;;
+}

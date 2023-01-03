@@ -1,0 +1,58 @@
+@import "../../../shared/scss/theme";
+@import "../../../shared/scss/spinner";
+#container {
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 150px;
+    .form {
+        background-color: black;
+        border-radius: 1em;
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 30px;
+        height: 200px;
+        .title {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-weight: 100;
+            font-size: 22px;
+            padding-bottom: 10px;
+        }
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            mat-form-field {
+                width: 100%;
+            }
+            padding-bottom: 5px;
+        }
+        .actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            button {
+                width: 100%;
+            }
+            .secondary {
+                background-color: $secondary;
+            }
+        }
+        .lbl-troubleshoot {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 10px;
+            color: $primary;
+            cursor: pointer;
+            &:hover {
+                color: $warn;
+            }
+        }
+    }
+}

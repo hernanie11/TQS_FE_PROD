@@ -1,0 +1,66 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <button mat-raised-button class="btn-new btn-primary" (click)="newRegion()">
+            New
+        </button>
+
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input class="upper-case" matInput autocomplete="off" [(ngModel)]="searchValue" autofocus (keydown.enter)="searchRegion()">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                </div>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell class="id" *matCellDef="let region"> {{region.id}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="region">
+                        <th mat-header-cell *matHeaderCellDef> Store Code </th>
+                        <td mat-cell class="code" *matCellDef="let region"> {{region.region}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell class="actions-menu" *matCellDef="let region">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="editRegion(region.id, region.region)">
+                                    <span>Edit</span>
+                                </button>
+
+                                <button mat-menu-item (click)="deleteRegion(region.id)">
+                                    <span>Delete</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="10">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" showFirstLastButtons [length]="totalRegions" [pageSizeOptions]="pageSizeOption"
+                [pageSize]="regionPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

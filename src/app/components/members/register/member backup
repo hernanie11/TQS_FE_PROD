@@ -1,0 +1,276 @@
+html
+<div class="container">
+
+    <div class="title-container">
+        <button mat-icon-button routerLink="/client/transactions">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <div class="title">
+            Registration
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="first-col">
+            <mat-form-field appearance="legacy">
+                <mat-label>STORE NAME</mat-label>
+                <input autofocus matInput autocomplete="off" placeholder="E-COMMERCE">
+            </mat-form-field>
+
+            <div class="title">Mobile Number</div>
+            <mat-form-field appearance="legacy" class="mobile-number-field">
+                <mat-label>MOBILE</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+
+            <div class="title">Name</div>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>FIRST NAME</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>LAST NAME</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+
+            <div class="title">Gender</div>
+            <mat-radio-group aria-label="Select an option" class="gender-radio-button">
+                <mat-radio-button value="1">Male</mat-radio-button>
+                <mat-radio-button value="2">Female</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="second-col">
+            <div class="title">Birthday</div>
+            <mat-form-field appearance="legacy">
+                <mat-label>BIRTHDAY</mat-label>
+                <input matInput [matDatepicker]="picker" autocomplete="off" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="title">Address</div>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>PROVINCE</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>MUNICIPALITY</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>BARANGAY</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+
+            <div class="title">Working and Cooking Status</div>
+            <mat-radio-group aria-label="Select an option" class="working-and-cooking">
+                <mat-radio-button value="1">WORKING</mat-radio-button>
+                <mat-radio-button value="2">NON-WORKING</mat-radio-button>
+            </mat-radio-group>
+            <div style="border-top: 1px solid white; width: 80%; margin: 5px 0px 0px;"></div>
+            <mat-radio-group aria-label="Select an option" class="working-and-cooking">
+                <mat-radio-button value="1">PRIMARY COOK</mat-radio-button>
+                <mat-radio-button value="2">NON-COOKING</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="third-col">
+            <div class="title">Email</div>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>EMAIL</mat-label>
+                <input matInput autocomplete="off">
+            </mat-form-field>
+
+            <div class="title password">Password</div>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>PASSWORD</mat-label>
+                <input matInput autocomplete="off" type="password">
+            </mat-form-field>
+            <mat-form-field appearance="legacy" class="name-field">
+                <mat-label>CONFIRM PASSWORD</mat-label>
+                <input matInput autocomplete="off" type="password">
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" class="name-field registration-date">
+                <mat-label>DATE OF REGISTRATION</mat-label>
+                <input matInput autocomplete="off" value="2022/22/2" readonly disabled>
+            </mat-form-field>
+            <button mat-raised-button class="register-button btn-primary">REGISTER</button>
+        </div>
+        <div class="fourth-col">
+            <div class="title">DATA PRIVACY ACT</div>
+            <p class="name-field">
+                Data Privacy Act: RDF regards your privacy with utmost importance.
+                Your information will only be shared to our authorized service providers
+                which may use your information to send you marketing materials and information about our products
+                and services with your express consent.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+css
+@import "../../../shared/scss/theme";
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  
+    .title-container {
+        margin: 20px 0px 0px 20px;
+        padding: 10px;
+        font-weight: 900;
+        font-size: 24px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        letter-spacing: 1px;
+        button{ 
+            color: gray;
+        }
+        .title {
+            border-left: 3px solid gray;
+            padding: 6px 10px;
+            color: $secondary;
+        }
+    }
+    .sub-title {
+        margin: 0px 0px 0px 20px;
+        padding: 10px;
+        letter-spacing: 1px;
+        font-size: 14px;
+        font-weight: 100;
+        color: $secondary;
+    }
+    .form-container {
+        margin: 40px 20px;
+        display: grid;
+        width: 97%;
+        grid-template-columns: repeat(12, 2fr);
+        height: calc(100vh - 250px);
+        .first-col {
+            grid-column: 1/4;
+            grid-row: 1/5;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid darkgray;
+            padding-right: 40px;
+            .title {
+                border-left: 3px solid $secondary;
+                padding-left: 5px;
+                margin-top: 15px;
+            }
+            .mobile-number-field {
+                margin-left: 20px;
+                margin-top: 10px;
+            }
+            .name-field {
+                margin-left: 20px;
+            }
+            .gender-radio-button {
+                margin-left: 20px;
+                margin-top: 10px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+        }
+
+        .second-col {
+            grid-column: 4/7;
+            grid-row: 1/5;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-left: 40px;
+            border-right: 1px solid darkgray;
+            padding-right: 5px;
+            .title {
+                border-left: 3px solid $secondary;
+                padding-left: 5px;
+                margin-top: 15px;
+            }
+            .working-and-cooking {
+                margin-left: 10px;
+                margin-top: 10px;
+                margin-bottom: 2px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .name-field {
+                margin-left: 20px;
+            }
+        }
+
+        .third-col {
+            grid-column: 7/10;
+            grid-row: 1/5;
+            margin-left: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-right: 1px solid darkgray;
+            padding-right: 50px;
+            .title {
+                border-left: 3px solid $secondary;
+                padding-left: 5px;
+                margin-top: 15px;
+            }
+
+            .name-field {
+                margin-left: 20px;
+            }
+            .password {
+                margin-top: 50px;
+            }
+            .registration-date {
+                margin-top: 50px;
+            }
+            .register-button {
+                margin-top: 10px;
+                width: 50%;
+                align-self: center;
+            }
+        }
+        .fourth-col {
+            grid-column: 10/13;
+            grid-row: 1/5;
+            margin-left: 40px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            .title {
+                border-left: 3px solid $secondary;
+                padding-left: 5px;
+                margin-top: 15px;
+            }
+            .name-field {
+                margin-left: 20px;
+                text-align: justify;
+            }
+
+        }
+        ::ng-deep .mat-focused .mat-form-field-label {
+            /*change color of label*/
+            color: $secondary !important;
+           }
+          
+        ::ng-deep.mat-form-field-underline {
+            /*change color of underline*/
+            background-color: $secondary !important;
+        } 
+          
+        ::ng-deep.mat-form-field-ripple {
+           /*change color of underline when focused*/
+            background-color: $secondary !important;;
+        }
+     
+
+    }
+}

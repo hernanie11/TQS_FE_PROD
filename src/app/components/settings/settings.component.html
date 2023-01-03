@@ -1,0 +1,78 @@
+<app-admin-container [title]="title">
+    <div settings id="container">
+        <!-- <div class="profile">
+            Security
+            <div class="border"></div>
+            <div class="content">
+                <mat-accordion>
+                    <mat-expansion-panel >
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          Logged-In History
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <p>This is the primary content of the panel.</p>
+                    </mat-expansion-panel>
+                  
+                  </mat-accordion>
+            </div>
+        </div> -->
+        <div class="computation">
+            <div class="content">
+                <div class="earning-points-percentage">
+                    <li>
+                        Earning Points Percentage
+                    </li>
+                    <span>:</span>
+                    <ng-container *ngIf="isComputionEdit; else elseTemplate">
+                        <mat-form-field appearance="legacy" color="accent">
+                            <mat-label></mat-label>
+                            <input [OnlyNumber]="true" autofocus matInput type="text" autocomplete="off"
+                                (keydown.enter)="okComputation()" [(ngModel)]="earningPointsPercentage">
+                            <mat-icon matSuffix>percent</mat-icon>
+                        </mat-form-field>
+                        <button mat-icon-button [disabled]="validateOk()" (click)="okComputation()">
+                            <mat-icon>check</mat-icon>
+                        </button>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <span>{{earningPointsPercentage}}%</span>
+                        <div>
+                            <button mat-icon-button (click)="editComputation()">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <!-- <button *ngIf="validateSave()" mat-icon-button class="btn-save">
+                                <mat-icon>save</mat-icon>
+                            </button> -->
+                        </div>
+                    </ng-template>
+                </div>
+                <mat-form-field color="accent" *ngIf="validateRemarks()" appearance="fill" class="remarks">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput [(ngModel)]="remarks"></textarea>
+                    <mat-hint>Input Remarks example memo #</mat-hint>
+                </mat-form-field>
+                <div class="actions">
+                    <button *ngIf="validateSave()" mat-raised-button class="btn-primary" (click)="save()">Save</button>
+                    <button *ngIf="validateSave()" mat-raised-button (click)="cancel()">Cancel</button>
+                </div>
+                <div class="example-computation">
+                    <div class="examples">
+                        <mat-form-field appearance="legacy" color="accent">
+                            <mat-label>Sample Amount Purchased</mat-label>
+                            <input [(ngModel)]="exampleBoughtAmount" matInput [OnlyNumber]="true" autocomplete="off" disabled>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="legacy" color="accent">
+                            <mat-label>Earned Points</mat-label>
+                            <input [value]="earnedAmount()  | currency:'PHP '" matInput disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-admin-container>

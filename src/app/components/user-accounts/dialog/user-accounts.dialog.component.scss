@@ -1,0 +1,10 @@
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .separator {
+        list-style: none;
+    }
+}

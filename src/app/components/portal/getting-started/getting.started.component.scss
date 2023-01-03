@@ -1,0 +1,59 @@
+@import "../../../shared/scss/theme";
+#container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+    gap: 40px;
+    background-color: $bgColor;
+    
+    @media only screen and (max-width: 500px) {
+        width: 100%;
+        gap: 0px;
+    }
+
+    .img-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        @media only screen and (max-width: 500px) {
+            padding: 10px;
+        }
+        img {
+            width: 450px;
+            @media only screen and (max-width: 500px) {
+                width: 100%;
+            }
+        }
+
+        // padding-bottom: 20px;
+    }
+
+    .col-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-weight: 100;
+        letter-spacing: 1px;
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .action {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .note {
+        border: 1px solid gray;
+        border-radius: 1em;
+        padding: 10px;
+        text-align: center;
+        color: red;
+        margin-bottom: 20px;
+    }
+}

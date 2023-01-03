@@ -1,0 +1,18 @@
+<div *ngIf="data.action == 'void'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+        <label class="noselect">
+            <!-- {{data.question}} -->
+            Type <label class="random-text-color">{{data.randomText}}</label> to proceed
+        </label>
+        <mat-form-field class="void-field" appearance="legacy" color="accent">
+            <!-- <mat-label>VOID</mat-label> -->
+            <input matInput [(ngModel)]="voidString" autocomplete="off" >
+          </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button  (click)="void()" mat-raised-button class="btn-primary" [disabled]="validateVoid() || isVoiding || buttonVoid == 'Voided'"
+            [class.spinner]="isVoiding">{{buttonVoid}}</button>
+        <button mat-raised-button (click)="cancel()">{{buttonCancel}}</button>
+    </mat-dialog-actions>
+</div>

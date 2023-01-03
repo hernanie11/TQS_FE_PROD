@@ -1,0 +1,94 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus
+                (keydown.enter)="searchRedeemedPoints(false)">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                    <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+                </div>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <label [class.voided] = "redeemed_points.deleted_at != null">{{redeemed_points.id}}</label>
+                         </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_name">
+                        <th mat-header-cell *matHeaderCellDef> First Name </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <label [class.voided] = "redeemed_points.deleted_at != null">{{redeemed_points.first_name}}</label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <label [class.voided] = "redeemed_points.deleted_at != null">{{redeemed_points.last_name}}</label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="store">
+                        <th mat-header-cell *matHeaderCellDef> Store </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <label [class.voided] = "redeemed_points.deleted_at != null">{{redeemed_points.store_name}}</label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="points_redeemed">
+                        <th mat-header-cell *matHeaderCellDef> Points Redeemed </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <label [class.voided] = "redeemed_points.deleted_at != null">{{redeemed_points.points_redeemed}}</label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date_redeemed">
+                        <th mat-header-cell *matHeaderCellDef> Date Redeemed </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <label [class.voided] = "redeemed_points.deleted_at != null">{{redeemed_points.transaction_datetime | date:'MMM dd, yyyy hh:mm:ss a'}} </label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell *matCellDef="let redeemed_points"> 
+                            <button *ngIf="redeemed_points.deleted_at == null" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                              </button>
+                              <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="void(redeemed_points.id)">
+                                  <!-- <mat-icon>dialpad</mat-icon> -->
+                                  <span>Void</span>
+                                </button>
+                              </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="13">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #redeemedPointsPaginator showFirstLastButtons [length]="totalRedeemedPoints"
+                [pageSizeOptions]="pageSizeOption" [pageSize]="redeemedPointsPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

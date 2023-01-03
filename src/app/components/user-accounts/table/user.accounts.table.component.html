@@ -1,0 +1,103 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <button class="btn-new btn-primary" mat-raised-button (click)="newUserAccount()">
+            New
+        </button>
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus
+                (keydown.enter)="searchUserAccount(false)">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <div table class="table">
+       <div class="main-table-container">
+        <div class="table-container">
+            <div class="example-loading-shade" *ngIf="isTableLoading">
+                <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+            </div>
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td class="id" mat-cell *matCellDef="let user"> {{user.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="first_name">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td mat-cell class="first-name" *matCellDef="let user"> {{user.first_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="last_name">
+                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                    <td mat-cell class="last-name" *matCellDef="let user"> {{user.last_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef> User Name </th>
+                    <td mat-cell class="username" *matCellDef="let user"> 
+                        {{user.username}}
+                       
+                        <mat-icon class="password-reset-icon" *ngIf="user.isReset" color="accent">lock_reset</mat-icon>
+                     </td>
+                </ng-container>
+
+                <ng-container matColumnDef="is_active">
+                    <th mat-header-cell *matHeaderCellDef> Is Active? </th>
+                    <td mat-cell class="is-active" *matCellDef="let user"> 
+                        <label [class.is-active-changed]="user.changed">{{user.is_active}}</label>    
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef> Date Created </th>
+                    <td mat-cell class="created-at" *matCellDef="let user"> {{user.created_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell class="actions-menu" *matCellDef="let user"> 
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="editUserAccount(user.id)">
+                                <span>Edit</span>
+                            </button>
+                            <ng-container *ngIf="user.is_active; else elseTemplate">
+                                <button mat-menu-item (click)="deactivate(user)">
+                                    <span>Deactivate</span>
+                                </button>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <button mat-menu-item (click)="deactivate(user)">
+                                    <span>Activate</span>
+                                </button>
+                            </ng-template>
+                            <button mat-menu-item (click)="resetPassword(user)">
+                                <span>Reset Password</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+              
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td colspan="7">
+                        <div class="no-data">
+                            {{lblLoading}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <mat-paginator color="accent" #userAccountPaginator showFirstLastButtons  [length]="totalUserAccounts" [pageSizeOptions]="pageSizeOption"
+            [pageSize]="userAccountsPerPage" (page)="onChangePage($event)">
+        </mat-paginator>
+       </div>
+    </div>
+</app-admin-container>

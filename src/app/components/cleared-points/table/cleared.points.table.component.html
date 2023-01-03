@@ -1,0 +1,76 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <button (click)="upload()" mat-raised-button color="accent">Upload</button>
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus
+                (keydown.enter)="searchClearedPoints(false)">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                    <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+                </div>
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell class="id" *matCellDef="let member"> {{member.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mobile_number">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+                        <td mat-cell *matCellDef="let member">
+                             {{member.mobile_number}}
+                            </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_name">
+                        <th mat-header-cell *matHeaderCellDef> First Name </th>
+                        <td mat-cell class="first-name" *matCellDef="let member"> {{member.first_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                        <td mat-cell class="last-name" *matCellDef="let member"> {{member.last_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cleared_points">
+                        <th mat-header-cell *matHeaderCellDef>Cleared Points </th>
+                        <td mat-cell class="cleared-points" *matCellDef="let member"> {{member.total_cleared_points |
+                            currency: ' '}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions </th>
+                        <td mat-cell class="cleared-points" *matCellDef="let member">
+                            <button (click)="viewSOA(member.member_id)" mat-icon-button>
+                                <mat-icon>history</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="13">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #clearedPointsPaginator showFirstLastButtons [length]="totalClearedPoints"
+                [pageSizeOptions]="pageSizeOption" [pageSize]="clearedPointsPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

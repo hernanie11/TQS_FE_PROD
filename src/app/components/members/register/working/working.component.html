@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="title">WORKING</div>
+    <div class="radio-button-container">
+        <div class="male">
+            <img src="../../../../../assets/logo/working/working.png" alt="">
+            <mat-radio-button value="Working" [checked]="membersRegisterServices.working == 'Working'" ngDefaultControl [(ngModel)]="membersRegisterServices.working">WORKING</mat-radio-button>
+        </div>
+        <div class="border"></div>
+        <div class="female">
+            <img src="../../../../../assets/logo/working/non-working.png" alt="">
+            <mat-radio-button value="Non-Working" [checked]="membersRegisterServices.working == 'Non-Working'" [checked]="" ngDefaultControl [(ngModel)]="membersRegisterServices.working">NON-WORKING</mat-radio-button>
+        </div>
+    </div>
+    <div class="actions">
+        <button mat-raised-button (click)="back()">Back</button>
+        <button mat-raised-button class="btn-primary" (click)="next()">Next</button>
+    </div>
+</div>

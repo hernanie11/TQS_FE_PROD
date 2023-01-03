@@ -1,0 +1,126 @@
+<div *ngIf="data.action == 'createStore'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button 
+        (click)="create()" 
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isButtonLoading"
+        [class.spinner]="isButtonLoading"
+        >{{data.button_name}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>
+
+  <div *ngIf="data.action == 'updateStore'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button 
+        (click)="update()" 
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isButtonLoading"
+        [class.spinner]="isButtonLoading"
+        >{{data.button_name}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>
+
+  <div *ngIf="data.action == 'activeInActive'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <div class="user-info">
+      <ul>
+        <li>ID</li>
+        <li>Code</li>
+        <li>Store Name</li>
+        <li>Area</li>
+      </ul>
+  
+      <ul class="separator">
+        <li> : </li>
+        <li> : </li>
+        <li> : </li>
+        <li> : </li>
+      </ul>
+  
+      <ul class="separator">
+        <li>{{data.store.id}}</li>
+        <li>{{data.store.code}}</li>
+        <li>{{data.store.name}}</li>
+        <li>{{data.store.area}}</li>
+      </ul>
+    </div>
+    <mat-dialog-actions align="end">
+      <button 
+        (click)="ActivateInActive()" 
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isButtonLoading"
+        [class.spinner]="isButtonLoading"
+        >{{data.button_name}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>
+
+
+  <div *ngIf="data.action == 'discardChanges'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button 
+        (click)="discard()" 
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isButtonLoading"
+        [class.spinner]="isButtonLoading"
+        >{{data.button_name}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>
+
+  <div *ngIf="data.action == 'GenerateNewToken'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button 
+      
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isGenerating"
+        [class.spinner]="isGenerating"
+        (click)="generateToken()"
+        >{{buttonGenerate}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>
+
+  <div *ngIf="data.action == 'RemoveToken'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+      {{data.question}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button 
+      
+        mat-raised-button 
+        class="btn-primary"
+        [disabled]="isRemoving"
+        [class.spinner]="isRemoving"
+        (click)="removeToken()"
+        >{{buttonRemoveToken}}</button>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+  </div>

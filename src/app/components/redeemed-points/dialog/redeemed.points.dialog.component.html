@@ -1,0 +1,40 @@
+<div *ngIf="data.action == 'redeem'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="redeem()" mat-raised-button class="btn-primary" [disabled]="isRedeeming"
+      [class.spinner]="isRedeeming">{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'void'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    <label class="noselect">
+      Type <label class="random-text-color">{{data.randomText}}</label> to proceed
+  </label>
+    <mat-form-field class="void-field" appearance="legacy" color="accent">
+      <!-- <mat-label>VOID</mat-label> -->
+      <input matInput [(ngModel)]="voidString" autocomplete="off" >
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="void()" mat-raised-button class="btn-primary" [disabled]="validateVoid() || isVoiding"
+      [class.spinner]="isVoiding">{{data.button_name}}</button>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'earnPoints'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button class="btn-primary" [mat-dialog-close]="true">{{data.button_name}}</button>
+    <button mat-raised-button [mat-dialog-close]="false">New Redeem</button>
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="field">
+        <div class="title">MOBILE NUMBER</div>
+        <mat-form-field appearance="legacy">
+            <mat-label>ENTER MOBILE NUMBER</mat-label>
+            <input 
+            #txtMobileNumber
+            (keydown.enter)="validate()"
+            (focusout)="focusMobileNumber()"
+            [specialCharacters]="[ '[' ,']' , '-' ]" mask="0000-000-0000"
+            [OnlyNumber]
+            autocomplete="off" min="11" max="11" matInput autocomplete="off" [(ngModel)]="membersRegisterServices.mobile_number">
+        </mat-form-field>
+
+        <div class="actions">
+            <button mat-raised-button routerLink="/client/transactions">CANCEL</button>
+            <button 
+                mat-raised-button 
+                class="btn-accent" 
+                [disabled]="fieldValidation()" 
+                [class.spinner]= "isValidating"
+                *ngIf="validateButton()"
+                (click)="validate()"
+            >Validate</button>
+            <button 
+                mat-raised-button 
+                class="btn-primary" 
+                *ngIf="validateNextButton()" 
+                (click)="next()"
+            >NEXT</button>
+        </div>
+    </div>
+    <div class="border"></div>
+    <div class="keypad">
+        <div class="row">
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('1')">1</button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('2')">2</button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('3')">3</button>
+        </div>
+        <div class="row">
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('4')">4</button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('5')">5</button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('6')">6</button>
+        </div>
+        <div class="row">
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('7')">7</button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('8')">8</button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('9')">9</button>
+        </div>
+        <div class="row">
+            <button mat-raised-button></button>
+            <button mat-raised-button [disabled]="membersRegisterServices.mobile_number.length == 11" (click)="addNumber('0')">0</button>
+            <button mat-raised-button (click)="remove()"><-</button>
+        </div>
+    </div>
+
+    
+</div>

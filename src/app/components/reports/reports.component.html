@@ -1,0 +1,75 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <mat-form-field appearance="fill" color="accent" class="select-report">
+            <mat-label>Select Report</mat-label>
+            <mat-select [(ngModel)]="reporstServices.selectedReport" (selectionChange)="setBasedDateRange()" [disabled]="isGenerating">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let report of reports" [value]="report">
+                    {{report}}
+                </mat-option>
+            </mat-select>
+            <mat-hint>This report will appear on the result</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill" color="accent" class="select-report" *ngIf="validateDateRangedBased()">
+            <mat-label>Date Ranged Based</mat-label>
+            <mat-select [(ngModel)]="selectedDateRanged" [disabled]="isGenerating">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let basedDateRanged of basedDateRanges" [value]="basedDateRanged">
+                    {{basedDateRanged}}
+                </mat-option>
+            </mat-select>
+            <mat-hint>This will be the basis of the reports date range</mat-hint>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" color="accent" *ngIf="reporstServices.selectedReport" class="select-report">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="reporstServices.range" [rangePicker]="picker" [max]="helperServices.today">
+                <input readonly matStartDate formControlName="start" placeholder="Start date">
+                <input readonly matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="isGenerating"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-error *ngIf="reporstServices.range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="reporstServices.range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            <mat-hint>This is the generated report's cut off</mat-hint>
+        </mat-form-field>
+
+        <!-- Earned Points -->
+        <mat-form-field appearance="fill" color="accent" class="select-report"
+            *ngIf="reporstServices.selectedReport == 'Earned-Points'">
+            <mat-label>Category</mat-label>
+            <mat-select multiple [disabled]="isGenerating" [(ngModel)]="selectedCategories">
+                <mat-option *ngFor="let category of earnedPointsCategory" [value]="category">
+                    {{category}}
+                </mat-option>
+            </mat-select>
+            <mat-hint>The selected category will filter the report</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" color="accent" class="select-report"
+            *ngIf="reporstServices.selectedReport == 'Earned-Points'">
+            <mat-label>Status</mat-label>
+            <mat-select multiple [disabled]="isGenerating" [(ngModel)]="selectedStatus">
+                <mat-option *ngFor="let status of earnedPointsStatus" [value]="status">
+                    {{status}}
+                </mat-option>
+            </mat-select>
+            <mat-hint>The selected status will filter the report</mat-hint>
+        </mat-form-field>
+
+        <button *ngIf="validateBeforeGenerate()" mat-fab color="primary" (click)="generate()" [disabled]="isGenerating"
+            class="btn-generate">
+            <mat-icon>get_app</mat-icon>
+        </button>
+
+    </div>
+    <div loader class="loader" [class.loader-margin-top]="isGenerating">
+        <mat-progress-bar mode="buffer" *ngIf="isGenerating" color="accent"></mat-progress-bar>
+        <label class="hint" *ngIf="isGenerating">Generating Report. Please do not close or reload the browser.</label>
+    </div>
+    <div table class="table">
+        <div class="dynamic-table-container">
+            <ng-container *ngComponentOutlet="componentRender"></ng-container>
+        </div>
+    </div>
+</app-admin-container>

@@ -1,0 +1,42 @@
+<div *ngIf="data.action == 'change-store'">
+    <h2 mat-dialog-title>Change Store</h2>
+<mat-dialog-content class="mat-typography">
+    <h3>Select Store</h3>
+    <form [formGroup]="storeActivateForm">
+        <mat-form-field class="upper-case" color="accent">
+            <mat-label>Store</mat-label>
+            <mat-select formControlName="store_id">
+                <mat-option>
+                    <ngx-mat-select-search [formControl]="StoreFilterCtrl" placeholderLabel="{{storesPlaceHolder}}"
+                        noEntriesFoundLabel="'no matching Store'">
+                    </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of filteredStore | async" [value]="item.id">
+                    {{item.name | uppercase}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Token</mat-label>
+            <!-- <textarea [type]="hide ? 'password' : 'text'" matInput autocomplete="off" formControlName="token"></textarea> -->
+            <input matInput formControlName="token" [type]="hide ? 'password' : 'text'" autocomplete="off">
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-hint [class.token-invalid]="!tokenValid">{{tokenValidationMessage}}</mat-hint>
+        </mat-form-field>
+        <div class="actions">
+            <button (click)="validate()" *ngIf="!tokenValid" [class.spinner]="isValidatingToken"
+            [disabled]="isValidatingToken || !storeActivateForm.valid" mat-raised-button class="btn-primary btn-validate">Validate</button>
+        <button (click)="changeStore()" *ngIf="tokenValid" [class.spinner]="isActivatingNewStore"
+            [disabled]="isActivatingNewStore" mat-raised-button class="btn-accent btn-validate">Change Store</button>
+            <button mat-raised-button (click)="close()">Close</button>
+        </div>
+    </form>
+</mat-dialog-content>
+</div>
+
+<div *ngIf="data.action == 're-login-confirmation'">
+    Please Login Again...
+    <button mat-button class="btn-relogin" (click)="relogin()">OK</button>
+</div>

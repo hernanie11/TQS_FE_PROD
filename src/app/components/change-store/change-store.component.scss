@@ -1,0 +1,18 @@
+mat-form-field {
+    width: 100%;
+}
+
+
+.btn-relogin {
+    width: 100%;
+}
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .btn-validate {
+        width: 100%;
+    }
+}

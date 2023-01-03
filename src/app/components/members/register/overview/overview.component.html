@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+        <div class="key">STORE</div>
+        <div class="key">MOBILE NUMBER</div>
+        <div class="key">FIRST NAME</div>
+        <div class="key">LAST NAME</div>
+        <div class="key">GENDER</div>
+        <div class="key">PROVINCE</div>
+        <div class="key">MUNICIPALITY</div>
+        <div class="key">BARANGAY</div>
+        <div class="key">PUROK</div>
+        <div class="key">STREET</div>
+    </div>
+    <div class="border"></div>
+    <div class="row">
+        <div class="values">{{getStoreName() }}</div>
+        <div class="values">{{membersRegisterServices.mobile_number}}</div>
+        <div class="values">{{membersRegisterServices.first_name}}</div>
+        <div class="values">{{membersRegisterServices.last_name}}</div>
+        <div class="values">{{membersRegisterServices.gender}}</div>
+        <div class="values">{{membersRegisterServices.province}}</div>
+        <div class="values">{{membersRegisterServices.municipality}}</div>
+        <div class="values">{{membersRegisterServices.addressForm.value.barangay}}</div>
+        <div class="values">
+            <ng-container *ngIf="membersRegisterServices.purok; else elseTemplate">
+                {{membersRegisterServices.purok}}
+            </ng-container>
+            <ng-template #elseTemplate>
+                ----------------
+            </ng-template>
+            
+        </div>
+        <div class="values">
+            <ng-container *ngIf="membersRegisterServices.street_name; else elseTemplate">
+                {{membersRegisterServices.street_name}}
+            </ng-container>
+            <ng-template #elseTemplate>
+                ----------------
+            </ng-template>
+            
+        </div>
+    </div>
+    <div class="border-2"></div>
+    <div class="row-2">
+        <div class="list">
+            <div class="row-list">
+                <div class="key">EMAIL ADDRESS</div>
+                <div class="key">WORKING</div>
+                <div class="key">COOKING</div>
+            </div>
+            <div class="border"></div>
+            <div class="row-list">
+                <div style="text-transform: none;" class="values">
+                <ng-container *ngIf="membersRegisterServices.email; else elseTemplate">
+                    {{membersRegisterServices.email}}
+                </ng-container>
+                <ng-template #elseTemplate>
+                    ----------------
+                </ng-template>
+                </div>
+                <div class="values">{{membersRegisterServices.working}}</div>
+                <div class="values">{{membersRegisterServices.cooking}}</div>
+            </div>
+        </div>   
+        <div class="action">
+            <button mat-raised-button (click)="back()">BACK</button>
+            <button [disabled]="membersRegisterServices.buttonName == 'CREATED'" mat-raised-button class="btn-primary" (click)="createMember()">{{membersRegisterServices.buttonName}}</button>
+        </div>
+    </div>
+</div>

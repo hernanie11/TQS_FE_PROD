@@ -1,0 +1,69 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <button mat-raised-button class="btn-new btn-primary" (click)="newBusinessModel()">
+            New
+        </button>
+
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus (keydown.enter)="searchStore()">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                    <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+                </div>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell class="id" *matCellDef="let businessModel"> {{businessModel.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="store_code">
+                        <th mat-header-cell *matHeaderCellDef> Business Model </th>
+                        <td mat-cell class="code" *matCellDef="let businessModel"> {{businessModel.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell class="actions-menu" *matCellDef="let businessModel">
+                            <button mat-icon-button [matMenuTriggerFor]="menu"
+                                aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="editBusinessModel(businessModel.id, businessModel.name)">
+                                    <span>Edit</span>
+                                </button>
+
+                                <button mat-menu-item (click)="deleteBusinessModel(businessModel.id)">
+                                    <span>Delete</span>
+                                </button>
+
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="10">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #storePaginator showFirstLastButtons [length]="totalBusinessModel"
+                [pageSizeOptions]="pageSizeOption" [pageSize]="businessModelPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

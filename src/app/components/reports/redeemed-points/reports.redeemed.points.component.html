@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="title">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">table</mat-icon>
+      {{title}}
+    </div>
+    <div class="actions">
+      <button mat-raised-button [disabled]="validateActions()" class="btn-primary" (click)="exportToExcel()">Export to Excel</button>
+      <button mat-raised-button [disabled]="validateActions()" class="btn-accent" (click)="exportToCSV()">Export to CSV</button>
+      <button mat-raised-button [disabled]="validateActions()" (click)="copyToClipboard()" [cdkCopyToClipboard]="stringtifyDataSource()">Copy to Clipboard</button>
+      <mat-form-field appearance="legacy" class="search" color="accent">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" (keyup)="applyFilter($event)" [(ngModel)]="searchValue" autocomplete="off">
+      </mat-form-field>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="reportsServices.redeemedPointsReportDataSource">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell class="id" *matCellDef="let redeemedPoint"> {{redeemedPoint.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mobileNumber">
+          <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+          <td mat-cell class="first-name" *matCellDef="let redeemedPoint"> {{redeemedPoint.mobile_number}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell class="first-name" *matCellDef="let redeemedPoint"> {{redeemedPoint.first_name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell class="last-name" *matCellDef="let redeemedPoint"> {{redeemedPoint.last_name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="store">
+          <th mat-header-cell *matHeaderCellDef> Store </th>
+          <td mat-cell class="store" *matCellDef="let redeemedPoint"> {{redeemedPoint.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="pointsRedeemed">
+          <th mat-header-cell *matHeaderCellDef> Points Redeemed </th>
+          <td mat-cell class="points-redeemed" *matCellDef="let redeemedPoint"> {{redeemedPoint.points_redeemed}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="dateRedeemed">
+          <th mat-header-cell *matHeaderCellDef> Date Redeemed </th>
+          <td mat-cell class="date-redeemed" *matCellDef="let redeemedPoint"> {{redeemedPoint.created_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="isVoided">
+          <th mat-header-cell *matHeaderCellDef> Void Status </th>
+          <td mat-cell class="points-redeemed" *matCellDef="let redeemedPoint"> {{redeemedPoint.void_status}} </td>
+        </ng-container>
+      
+      
+      
+        <ng-container matColumnDef="voidedAt">
+          <th mat-header-cell *matHeaderCellDef> Date Voided </th>
+          <td mat-cell class="date-redeemed" *matCellDef="let redeemedPoint"> {{redeemedPoint.voided_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">No data</td>
+        </tr>
+      </table>
+      
+    </div>
+    <mat-paginator #earnedPointsPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>

@@ -1,0 +1,359 @@
+<div class="container">
+    <div class="title-container">
+        <div class="title">
+            <button mat-icon-button (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <div class="title">
+                Transactions
+            </div>
+        </div>
+        <div class="sub-title">
+            {{getStoreName()}}
+        </div>
+    </div>
+
+    <div class="tab-container">
+        <mat-tab-group color="accent" (selectedTabChange)="loadTabs($event)">
+            <mat-tab label="Pending Earned Points">
+                <ng-template matTabContent>
+                    <div class="tab-content">
+                        <div class="search">
+                            <button
+                                [disabled]="isSynching || !validateSync() || !appServices.internetForm.value.isOnline"
+                                (click)="sync()" mat-raised-button class="btn-primary" matTooltip="Sync Earned Points and Members"
+                                [class.spinner]="isSynching"
+                                >Sync</button>
+                            <!-- <img *ngIf="isSynching" src="../../../assets/icons/loading.gif" alt=""> -->
+                            <button (click)="removeVoid()" mat-raised-button color="accent"
+                                [disabled]="isRemovingVoid || !validateRemoveVoid()">{{buttonRemove}}
+                            </button>
+                            <img *ngIf="isRemovingVoid" src="../../../assets/icons/loading.gif" alt="">
+                            <mat-form-field appearance="legacy" color="accent">
+                                <mat-label>Search</mat-label>
+                                <input matInput type="text" [(ngModel)]="value" autocomplete="off"
+                                    (keyup)="filter($event)">
+                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="table-container">
+                            <div class="mat-elevation-z8">
+                                <table #tblPendingPoints mat-table [dataSource]="dataSource" matSort>
+
+                                    <ng-container matColumnDef="transaction_no">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction No </th>
+                                        <td class="transaction-no" mat-cell *matCellDef="let row">
+                                            <label [class.voided]="row.void_date != null">{{row.transaction_no}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="mobile_number">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+                                        <td class="mobile-number" mat-cell *matCellDef="let row">
+                                            <label [class.voided]="row.void_date != null">{{row.mobile_number}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                        <td class="name" mat-cell *matCellDef="let row">
+                                            <label [class.voided]="row.void_date != null">{{row.name}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="bought_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchased Amount</th>
+                                        <td class="bought-amount" mat-cell *matCellDef="let row">
+                                            <label [class.voided]="row.void_date != null">{{row.bought_amount |
+                                                currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="earned_points">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Earned Points </th>
+                                        <td class="earned-points" mat-cell *matCellDef="let row">
+                                            <label [class.voided]="row.void_date != null">{{row.earned_points |
+                                                currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="date_earned">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Earned </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+                                            <label [class.voided]="row.void_date != null">{{row.date_earned | date: 'MMM dd, yyyy hh:mm:ss a'}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actions" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+                                            <button *ngIf="row.void_date == null" (click)="void(row._id)"
+                                                mat-icon-button color="warn" matTooltip="Void">
+                                                <mat-icon>block</mat-icon>
+                                            </button>
+
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="7">No data</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <mat-paginator color="accent" #pendingPaginator [pageSizeOptions]="[5, 10, 25, 100]"
+                            aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Synch Earned Points">
+                <ng-template matTabContent>
+                    <div class="tab-content">
+                        <div class="search">
+                            <mat-form-field appearance="legacy" color="accent">
+                                <mat-label>Search</mat-label>
+                                <input matInput type="text" [(ngModel)]="synchedSearchValue" autocomplete="off" (keydown.enter)="filterSynchedEarnedPoints()">
+                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="table-container">
+                            <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="synchedDataSource" matSort>
+
+                                    <ng-container matColumnDef="transaction_no">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction No </th>
+                                        <td class="transaction-no" mat-cell *matCellDef="let row">
+                                            <label>{{row.transaction_no}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="mobile_number">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+                                        <td class="mobile-number" mat-cell *matCellDef="let row">
+                                            <label>{{row.memberData.mobile_number}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                        <td class="name" mat-cell *matCellDef="let row">
+                                            <label>{{row.memberData.first_name}} {{row.memberData.last_name}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="bought_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchased Amount</th>
+                                        <td class="bought-amount" mat-cell *matCellDef="let row">
+                                            <label>{{row.bought_amount |
+                                                currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="earned_points">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Earned Points </th>
+                                        <td class="earned-points" mat-cell *matCellDef="let row">
+                                            <label>{{row.earned_points |
+                                                currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="date_earned">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Earned </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+                                            <label>{{row.date_earned | date: 'MMM dd, yyyy hh:mm:ss a'}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actions" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="synchedDisplayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: synchedDisplayedColumns;"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="7">{{lblLoadingSyncEarnedPoints}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <mat-paginator (page)="synchedOnChangePage($event)" color="accent" [length]="totalSyncEarnedPoints" #synchPaginator [pageSizeOptions]="[5, 10, 25, 100]"
+                            aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Redeemed Points">
+                <ng-template matTabContent>
+                    <div class="tab-content">
+                        <div class="search">
+                            <mat-form-field appearance="legacy" color="accent">
+                                <mat-label>Search</mat-label>
+                                <input matInput type="text" [(ngModel)]="synchedSearchValue" autocomplete="off" (keydown.enter)="filterSynchedEarnedPoints()">
+                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="table-container">
+                            <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="redeemedDataSource" matSort>
+                                    <ng-container matColumnDef="transaction_no">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction No </th>
+                                        <td class="transaction-no" mat-cell *matCellDef="let row">
+                                            <label>{{row.transaction_no}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="mobile_number">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+                                        <td class="mobile-number" mat-cell *matCellDef="let row">
+                                            <label>{{row.memberData.mobile_number}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                        <td class="name" mat-cell *matCellDef="let row">
+                                            <label>{{row.memberData.first_name}} {{row.memberData.last_name}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="redeemed_points">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Redeemed Points </th>
+                                        <td class="name" mat-cell *matCellDef="let row">
+                                            <label> {{row.redeemed_points | currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="date_redeemed">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Redeemed </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+                                            <label>{{row.date_redeemed | date: 'MMM dd, yyyy hh:mm:ss a'}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actions" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="redeemedDisplayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: redeemedDisplayedColumns;"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="7">{{lblLoadingRedeemedPoints}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <mat-paginator (page)="redeemedOnChangePage($event)" color="accent" [length]="totalRedeemedPoints" #redeemedPaginator [pageSizeOptions]="[5, 10, 25, 100]"
+                            aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Voided Points">
+                <ng-template matTabContent >
+                    <div class="tab-content">
+                        <div class="search">
+                            <button [class.spinner]="synchingVoid" [disabled]="synchingVoid || voidedEarnedPointsDataSource.data.length == 0 || showAllVoided == true" (click)="syncVoid()" mat-raised-button class="btn-primary">Sync</button>                            
+                            <mat-checkbox (change)="getVoidedEarnedPoints()" [(ngModel)]="showAllVoided" class="example-margin">Show All Voided Earned Points</mat-checkbox>
+                            <img *ngIf="isRemovingVoid" src="../../../assets/icons/loading.gif" alt="">
+                            <mat-form-field appearance="legacy" color="accent">
+                                <mat-label>Search</mat-label>
+                                <input matInput type="text" [(ngModel)]="value" autocomplete="off"
+                                    (keyup)="filterVoidedEarnedPoints($event)">
+                                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="table-container">
+                            <div class="mat-elevation-z8">
+                                <table #tblVoidedEarnedPoints mat-table [dataSource]="voidedEarnedPointsDataSource" matSort>
+
+                                    <ng-container matColumnDef="transaction_no">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction No </th>
+                                        <td class="transaction-no" mat-cell *matCellDef="let row">
+                                            <label>{{row.transaction_no}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="mobile_number">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+                                        <td class="mobile-number" mat-cell *matCellDef="let row">
+                                            <label>{{row.memberData.mobile_number}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                        <td class="name" mat-cell *matCellDef="let row">
+                                            <label>{{row.memberData.first_name}} {{row.memberData.last_name}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="bought_amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchased Amount</th>
+                                        <td class="bought-amount" mat-cell *matCellDef="let row">
+                                            <label>{{row.bought_amount | currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="earned_points">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Earned Points </th>
+                                        <td class="earned-points" mat-cell *matCellDef="let row">
+                                            <label>{{row.earned_points | currency: ' '}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="date_earned">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Earned </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+                                            <label>{{row.date_earned | date: 'MMM dd, yyyy hh:mm:ss a'}}</label>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actions" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                                        <td class="date-earned" mat-cell *matCellDef="let row">
+                                            <button *ngIf="row.void_date == null" (click)="void(row._id)"
+                                                mat-icon-button color="warn" matTooltip="Void">
+                                                <mat-icon>block</mat-icon>
+                                            </button>
+
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedVoidedEarnedPointsColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedVoidedEarnedPointsColumns;"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="7">No data</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <mat-paginator #voidPaginator color="accent"  [pageSizeOptions]="[5, 10, 25, 100]"
+                            aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

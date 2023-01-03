@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="title">GENDER</div>
+    <div class="radio-button-container">
+        <div class="male">
+            <img src="../../../../../assets/logo/gender/male.png" alt="">
+            <mat-radio-button #radioGenderMale [checked]="membersRegisterServices.gender == 'Male'" value="Male" ngDefaultControl [(ngModel)]="membersRegisterServices.gender">MALE</mat-radio-button>
+        </div>
+        <div class="border"></div>
+        <div class="female">
+            <img src="../../../../../assets/logo/gender/female.png" alt="">
+            <mat-radio-button [checked]="membersRegisterServices.gender == 'Female'" value="Female" ngDefaultControl [(ngModel)]="membersRegisterServices.gender">FEMALE</mat-radio-button>
+        </div>
+ 
+    </div>
+    <div class="actions">
+        <button tabindex="3" mat-raised-button (click)="back()">Back</button>
+        <button tabindex="4" [disabled]="validateFields()" mat-raised-button class="btn-primary" (click)="next()">Next</button>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+@import "../../shared/scss/theme";
+#container {
+    margin: 0px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    // gap: 20px;
+    @media only screen and (max-width: 1000px) {
+        flex-direction: column;
+    }
+    .profile {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        .border {
+            border-bottom: 1px solid white;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+    }
+    .computation {
+        display: flex;
+        flex-direction: column;
+        width: 370px;
+        @media only screen and (max-width: 657px) {
+           width: 100%;
+        }
+        .content {
+            .earning-points-percentage {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+                mat-form-field {
+                    width: 100px;
+                }
+                .btn-save {
+                    color: $secondary;
+                }
+            }
+            .remarks {
+                width: 100%;
+            }
+            .actions {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+                
+            }
+            .example-computation {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                .examples {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,124 @@
+{
+    "user_accounts": [
+        {
+            "id": 1,
+            "first_name": "Philip",
+            "last_name": "Mendoza",
+            "user_name": "pmendoza",
+            "password": "tqs",
+            "is_active": true
+        },
+        {
+            "id": 2,
+            "first_name": "Josh",
+            "last_name": "Mendoza",
+            "user_name": "jmendoza",
+            "password": "tqs",
+            "is_active": true
+        },
+        {
+            "id": 3,
+            "first_name": "Philip Joshua",
+            "last_name": "Mendoza",
+            "user_name": "pjmendoza",
+            "password": "tqs",
+            "is_active": true
+        },
+        {
+            "id": 4,
+            "first_name": "Liezl",
+            "last_name": "Mendoza",
+            "user_name": "lmendoza",
+            "password": "tqs",
+            "is_active": true
+        }
+    ],
+    "stores": [
+        {
+            "id": 1,
+            "code": "FO101",
+            "name": "Apalit",
+            "area": "Area 1",
+            "cluster": "Cluster 5",
+            "business_model": "FO"
+        },
+        {
+            "id": 2,
+            "code": "FO102",
+            "name": "Macabebe",
+            "area": "Area 1",
+            "cluster": "Cluster 5",
+            "business_model": "FO"
+        },
+        {
+            "id": 3,
+            "code": "FO103",
+            "name": "Masantol",
+            "area": "Area 1",
+            "cluster": "Cluster 5",
+            "business_model": "FO"
+        },
+        {
+            "id": 4,
+            "code": "FO104",
+            "name": "Sulipan",
+            "area": "Area 1",
+            "cluster": "Cluster 5",
+            "business_model": "FO"
+        }
+    ],
+    "members": [
+        {
+            "id": 1,
+            "first_name": "Philip",
+            "last_name": "Mendoza",
+            "gender": "Male",
+            "birthday": "June 10, 1998",
+            "barangay": "Sampaga",
+            "municipality": "Apalit",
+            "province": "Pampanga",
+            "email": "philip@gmail.com",
+            "mobile_number": "09122345421",
+            "is_active": true
+        },
+        {
+            "id": 2,
+            "first_name": "Joshua",
+            "last_name": "Mendoza",
+            "gender": "Male",
+            "birthday": "June 10, 1998",
+            "barangay": "Sampaga",
+            "municipality": "Apalit",
+            "province": "Pampanga",
+            "email": "joshua@gmail.com",
+            "mobile_number": "09122345421",
+            "is_active": true
+        },
+        {
+            "id": 3,
+            "first_name": "Philip Joshua",
+            "last_name": "Mendoza",
+            "gender": "Male",
+            "birthday": "June 10, 1998",
+            "barangay": "Sampaga",
+            "municipality": "Apalit",
+            "province": "Pampanga",
+            "email": "philipjoshua@gmail.com",
+            "mobile_number": "09122345421",
+            "is_active": true
+        },
+        {
+            "id": 4,
+            "first_name": "Liezl",
+            "last_name": "Mendoza",
+            "gender": "Male",
+            "birthday": "June 10, 1998",
+            "barangay": "Sampaga",
+            "municipality": "Apalit",
+            "province": "Pampanga",
+            "email": "liezl@gmail.com",
+            "mobile_number": "09122345421",
+            "is_active": true
+        }
+    ]
+}

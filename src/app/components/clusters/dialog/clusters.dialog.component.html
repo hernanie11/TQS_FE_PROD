@@ -1,0 +1,47 @@
+<div *ngIf="data.action == 'CreateCluster'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Cluster</mat-label>
+            <input [(ngModel)]="cluster" matInput autocomplete="off" class="upper-case"
+                (keydown.enter)="createCluster()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button (click)="createCluster()" mat-raised-button class="btn-primary"
+            [disabled]="isCreatingCluster || validateCreate()"
+            [class.spinner]="isCreatingCluster">{{buttonCreate}}</button>
+        <button mat-raised-button (click)="cancelCreate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'UpdateCluster'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Store Code</mat-label>
+            <input [(ngModel)]="cluster" matInput autocomplete="off" class="upper-case"
+                (keydown.enter)="updateCluster()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isUpdatingCluster || validateUpdate()"
+            [class.spinner]="isUpdatingCluster" (click)="updateCluster()">{{buttonUpdate}}</button>
+        <button mat-raised-button (click)="cancelUpdate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'DeleteCluster'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        {{data.question}}
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isDeletingCluster" [class.spinner]="isDeletingCluster"
+            (click)="deleteCluster()">{{buttonDelete}}</button>
+        <button mat-raised-button (click)="cancelDelete()">Cancel</button>
+    </mat-dialog-actions>
+</div>

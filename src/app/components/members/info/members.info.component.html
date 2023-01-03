@@ -1,0 +1,118 @@
+<div class="container">
+    <div class="title-container">
+        <div class="title">
+            <button mat-icon-button (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <div class="title">
+                Customer Information
+            </div>
+        </div>
+        <div class="sub-title">
+            {{getStoreName()}}
+        </div>
+    </div>
+
+    <div class="body-container">
+        <div class="menu-bar">
+            <mat-form-field appearance="legacy" color="accent">
+                <mat-label>Search</mat-label>
+                <input [(ngModel)]="searchValue" matInput autocomplete="off" (keydown.enter)="searchMember()">
+                <mat-hint>Example Enter Mobile #</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td class="id" mat-cell *matCellDef="let member"> {{member._id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mobile_number">
+                    <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+                    <td class="mobile-number" mat-cell *matCellDef="let member"> {{member.mobile_number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="first_name">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td class="name" mat-cell *matCellDef="let member"> {{member.first_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="last_name">
+                    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                    <td class="name" mat-cell *matCellDef="let member"> {{member.last_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="gender">
+                    <th mat-header-cell *matHeaderCellDef> Gender </th>
+                    <td class="gender" mat-cell *matCellDef="let member"> {{member.gender}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="birthday">
+                    <th mat-header-cell *matHeaderCellDef> Birthday </th>
+                    <td class="birthday" mat-cell *matCellDef="let member"> {{member.birthday | date: 'MM/dd/yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td class="email" mat-cell *matCellDef="let member"> {{member.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="barangay">
+                    <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                    <td class="address" mat-cell *matCellDef="let member"> {{member.barangay}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="municipality">
+                    <th mat-header-cell *matHeaderCellDef> Municipality </th>
+                    <td class="address" mat-cell *matCellDef="let member"> {{member.municipality}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="province">
+                    <th mat-header-cell *matHeaderCellDef> Province </th>
+                    <td class="address" mat-cell *matCellDef="let member"> {{member.province}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td class="actions" mat-cell *matCellDef="let member"> 
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                              <mat-icon>visibility</mat-icon>
+                              <span>View</span>
+                            </button>
+
+                            <button mat-menu-item>
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                              </button>
+                          </mat-menu>
+                          
+                    </td>
+                </ng-container>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td colspan="13">
+                        <div class="no-data">
+                            {{lblLoading}}
+                        </div>
+                    </td>
+                </tr>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+
+        </div>
+
+        <mat-paginator color="accent" #memberPaginator showFirstLastButtons [length]="totalItems"
+            [pageSizeOptions]="pageSizeOption" [pageSize]="itemsPerPage" (page)="onChangePage($event)">
+        </mat-paginator>
+    </div>
+
+</div>

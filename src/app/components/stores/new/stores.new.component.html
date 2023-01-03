@@ -1,0 +1,95 @@
+<app-admin-container [title]="title">
+    <div new id="container">
+        <form [formGroup]="storeForm" (submit)="create()">
+            <div class="code">
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Branch Code</mat-label>
+                    <mat-select formControlName="code">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="StoreCodeFilterCtrl"
+                                placeholderLabel="{{storeCodePlaceHolder}}" noEntriesFoundLabel="'no matching Store Code'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredStoreCodes | async" [value]="item.store_code">
+                            {{item.store_code | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy" color="accent" class="upper-case">
+                    <mat-label>Branch Name</mat-label>
+                    <input Capitalize formControlName="name" class="upper-case" matInput autocomplete="off">
+                </mat-form-field>
+            </div>
+
+            <div class="location">
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Area</mat-label>
+                    <mat-select formControlName="area">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="AreasFilterCtrl"
+                                placeholderLabel="{{areaPlaceHolder}}" noEntriesFoundLabel="'no matching Area'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredAreas | async" [value]="item.area">
+                            {{item.area | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <!-- <mat-form-field appearance="legacy" color="accent">
+                    <mat-label>Region</mat-label>
+                    <mat-select formControlName="region">
+                        <mat-option *ngFor="let region of regions" [value]="region">
+                            {{region}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Region</mat-label>
+                    <mat-select formControlName="region">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="RegionFilterCtrl"
+                                placeholderLabel="{{regionPlaceHolder}}" noEntriesFoundLabel="'no matching Region'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredRegion | async" [value]="item.region">
+                            {{item.region | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="category">
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Cluster</mat-label>
+                    <mat-select formControlName="cluster">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="ClustersFilterCtrl"
+                                placeholderLabel="{{clusterPlaceHolder}}" noEntriesFoundLabel="'no matching Cluster'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredClusters | async" [value]="item.cluster">
+                            {{item.cluster | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="upper-case" color="accent">
+                    <mat-label>Business Models</mat-label>
+                    <mat-select formControlName="business_model">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="BusinessModelFilterCtrl"
+                                placeholderLabel="{{businessModelPlaceHolder}}" noEntriesFoundLabel="'no matching Business Model'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let item of filteredBusinessModel | async" [value]="item.name">
+                            {{item.name | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="actions">
+                <button mat-raised-button class="btn-primary" [disabled]="formValidation()">Create</button>
+                <button type="reset" mat-raised-button class="btn-danger">Reset</button>
+                <button mat-raised-button (click)="back()">Back</button>
+            </div>
+        </form>
+    </div>
+</app-admin-container>

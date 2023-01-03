@@ -1,0 +1,17 @@
+@import "../../../shared/scss/theme";
+.example-spacer {
+  flex: 1 1 auto;
+}
+#container {
+  background-color: $secondary;
+  font-size: clamp(1rem, 1.3vw, 2rem); 
+  .title {
+    color: #424242;
+  }
+  .menu {
+    color:$bgColor;
+  }
+  .logging-out {
+    font-weight: 400;
+  }
+}

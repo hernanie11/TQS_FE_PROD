@@ -1,0 +1,111 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <button mat-raised-button class="btn-new btn-primary" (click)="newStore()">
+            New
+        </button>
+
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus (keydown.enter)="searchStore()">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                    <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+                </div>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell class="id" *matCellDef="let store"> {{store.id}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="code">
+                        <th mat-header-cell *matHeaderCellDef> Branch Code </th>
+                        <td mat-cell class="code" *matCellDef="let store"> {{store.code}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Branch Name </th>
+                        <td mat-cell class="store-name" *matCellDef="let store"> {{store.name}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="area">
+                        <th mat-header-cell *matHeaderCellDef> Area </th>
+                        <td mat-cell class="area" *matCellDef="let store"> {{store.area}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="region">
+                        <th mat-header-cell *matHeaderCellDef> Region </th>
+                        <td mat-cell class="region" *matCellDef="let store"> {{store.region}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="cluster">
+                        <th mat-header-cell *matHeaderCellDef> Cluster </th>
+                        <td mat-cell class="cluster" *matCellDef="let store"> {{store.cluster}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="business_model">
+                        <th mat-header-cell *matHeaderCellDef> Business Model </th>
+                        <td mat-cell class="business-model" *matCellDef="let store"> {{store.business_model}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="is_active">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell class="status" *matCellDef="let store"> 
+                            <label [class.status-changed]="store.hasChanged">{{store.status}}</label>
+                         </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="created_at">
+                        <th mat-header-cell *matHeaderCellDef> Date Created </th>
+                        <td mat-cell class="date-created" *matCellDef="let store"> {{store.created_at | date}} </td>
+                    </ng-container>
+    
+    
+                    <ng-container matColumnDef="actions" stickyEnd="">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell class="actions-menu" *matCellDef="let store">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="editStore(store.id)">
+                                    <span>Edit</span>
+                                </button>
+                                <ng-container *ngIf="store.status == 'Active'; else elseTemplate">
+                                    <button mat-menu-item (click)="activateInactivate('Deactivate', store)">
+                                        <span>Deactivate</span>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button mat-menu-item (click)="activateInactivate('Activate', store)">
+                                        <span>Activate</span>
+                                    </button>
+                                </ng-template>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="10">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #storePaginator showFirstLastButtons [length]="totalItems" [pageSizeOptions]="pageSizeOption"
+                [pageSize]="storesPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

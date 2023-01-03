@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="title">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">table</mat-icon>
+      {{title}}
+    </div>
+    <div class="actions">
+      <button mat-raised-button [disabled]="validateActions()" class="btn-primary" (click)="exportToExcel()">Export to Excel</button>
+      <button mat-raised-button [disabled]="validateActions()" class="btn-accent" (click)="exportToCSV()">Export to CSV</button>
+      <button mat-raised-button [disabled]="validateActions()" (click)="copyToClipboard()" [cdkCopyToClipboard]="stringtifyDataSource()">Copy to Clipboard</button>
+      <mat-form-field appearance="legacy" class="search" color="accent">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" (keyup)="applyFilter($event)" [(ngModel)]="searchValue" autocomplete="off">
+      </mat-form-field>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="reportsServices.frequencyEarnedPointsReportDataSource">
+        <ng-container matColumnDef="mobileNumber">
+          <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+          <td mat-cell class="mobile-number" *matCellDef="let frequency"> {{frequency.mobile_number}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="storeName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell class="first-name" *matCellDef="let frequency"> {{frequency.first_name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionNo">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell class="last-name" *matCellDef="let frequency"> {{frequency.last_name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="frequency">
+          <th mat-header-cell *matHeaderCellDef> Frequency </th>
+          <td mat-cell class="frequency" *matCellDef="let frequency"> {{frequency.count}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef> First Name </th>
+            <td mat-cell class="first-name" *matCellDef="let voidedPoint"> {{voidedPoint.first_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            <td mat-cell class="last-name" *matCellDef="let voidedPoint"> {{voidedPoint.last_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell class="points-redeemed" *matCellDef="let voidedPoint"> {{voidedPoint.amount}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="points_earn">
+            <th mat-header-cell *matHeaderCellDef> Voided Points </th>
+            <td mat-cell class="points-redeemed" *matCellDef="let voidedPoint"> {{voidedPoint.points_earn}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date_earned">
+            <th mat-header-cell *matHeaderCellDef> Transaction Date  </th>
+            <td mat-cell class="date-redeemed" *matCellDef="let voidedPoint"> {{voidedPoint.transaction_datetime | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date_voided">
+            <th mat-header-cell *matHeaderCellDef> Date Voided </th>
+            <td mat-cell class="date-redeemed" *matCellDef="let voidedPoint"> {{voidedPoint.voided_at |  date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date_synched">
+            <th mat-header-cell *matHeaderCellDef> Date Synched </th>
+            <td mat-cell class="date-redeemed" *matCellDef="let voidedPoint"> {{voidedPoint.created_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">No data</td>
+        </tr>
+      </table>
+      
+    </div>
+    <mat-paginator #frequencyEarnedPointsPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>

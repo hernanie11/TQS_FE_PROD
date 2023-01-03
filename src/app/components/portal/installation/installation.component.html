@@ -1,0 +1,83 @@
+<div id="container">
+    <div class="header">
+        <img src="../../../../assets/sidebar-logo/q_system_logo6.png" alt="">
+    </div>
+    <div class="note">
+        <ng-container [ngSwitch]="stepperOrientation | async">
+            <li *ngSwitchCase="'horizontal'">This installation requires internet connection</li>
+            <li *ngSwitchCase="'vertical'">This installation requires internet connection</li>
+        </ng-container>
+    </div>
+    <div class="stepper">
+        <mat-stepper  #stepper [orientation]="(stepperOrientation | async)!">
+            <mat-step [stepControl]="storeActivateForm" label="Select Store to Activate" >
+                <form [formGroup]="storeActivateForm">
+                    <div class="fields">
+                        <mat-form-field appearance="fill" color="accent">
+                            <mat-label>Stores</mat-label>
+                            <mat-select formControlName="store_id">
+                                <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name}}</mat-option>
+                              </mat-select>
+                              <mat-hint >{{storeHint}}</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" color="accent">
+                            <mat-label>Token</mat-label>
+                            <!-- <textarea [type]="hide ? 'password' : 'text'" matInput autocomplete="off" formControlName="token"></textarea> -->
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="token" autocomplete="off">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </button>
+                            <mat-hint [class.token-invalid]="!tokenValid">{{tokenValidationMessage}}</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="actions">
+                        <button 
+                            mat-raised-button 
+                            class="btn-primary" 
+                            (click)="validateToken()"
+                            [disabled]="isValidatingToken || !storeActivateForm.valid || appServices.internetForm.value.isOnline == false"
+                            [class.spinner]="isValidatingToken"
+                            >Validate Token</button>
+                        <button *ngIf="tokenValid" mat-raised-button class="btn-accent" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="uploadForm" label="Import Database">
+                <form [formGroup]="uploadForm" enctype="multipart/form-data">
+                    <div class="import-db-field">
+                        <mat-form-field appearance="legacy" color="accent">
+                            <mat-label>Attach Json File Database</mat-label>
+                            <ngx-mat-file-input color="accent" formControlName="db">
+                            </ngx-mat-file-input>
+                        </mat-form-field>
+                        <button 
+                            mat-raised-button 
+                            class="btn-primary" 
+                            [disabled]="!uploadForm.valid || uploadingDb"
+                            (click)="uploadDatabase()"
+                        >Upload</button>
+                    </div>
+                    <div class="upload-progress-bar" *ngIf="uploadingDb">
+                        <!-- {{moduleUploading}} 
+                        {{currentUploaded| number}}/
+                        {{totalCurrentUploading| number}} -->
+                        <mat-progress-bar mode="determinate" [value]="uploadedPercentage"></mat-progress-bar>
+                        Uploading Progress {{uploadedPercentage | currency:' '}}%
+                    </div>
+                    <div class="actions">
+                        <button mat-raised-button matStepperPrevious>Back</button>
+                        <button mat-raised-button class="btn-accent" [disabled]="uploadedPercentage != 100 || uploadStatus != 'Done'" matStepperNext>{{buttonNext}}</button>
+                    </div>
+                </form>
+    
+            </mat-step>
+           
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>Thank you for using TQS. You may now log-in <a routerLink="/login" class="login-to">http://localhost:4200/</a></p>
+                
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>

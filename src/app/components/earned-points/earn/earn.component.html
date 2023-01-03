@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="title-container">
+        <div class="title">
+            <button mat-icon-button (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <div class="title">
+                Earn Points
+            </div>
+        </div>
+        <div class="sub-title">{{getStoreName()}}</div>
+
+    </div>
+
+   
+    <form class="form-container" [formGroup]="earnForm">
+        <mat-form-field appearance="legacy">
+            <mat-label>Enter Mobile Number</mat-label>
+            <input (focusout)="focusMobileNumber()" [specialCharacters]="[ '[' ,']' , '-' ]" mask="0000-000-0000" formControlName="mobile_number" (keydown.enter)="checkMobileNumber()"  matInput autocomplete="off" 
+            #txtMobileNumber cdkFocusInitial
+            >
+        </mat-form-field>
+        <mat-form-field appearance="legacy" *ngIf="isMobileNumberExists">
+            <mat-label>Transaction No.</mat-label>
+            <input #txtTransactionNo formControlName="transaction_no" matInput autocomplete="off" autofocus>
+        </mat-form-field>
+
+        <mat-form-field appearance="legacy" *ngIf="isMobileNumberExists">
+            <mat-label>Amount</mat-label>
+            <input formControlName="bought_amount" [OnlyNumber] matInput autocomplete="off">
+        </mat-form-field>
+
+        <div class="earned-points" *ngIf="isMobileNumberExists">
+            <div>Earned Points</div>
+            <!-- <div>:</div> -->
+            <div>{{earnPointsPercentage() | currency: ' '}}</div>
+        </div>
+        <div class="actions" *ngIf="isMobileNumberExists">
+            <button [disabled]="validateForm()" (click)="earn()" mat-raised-button class="btn-primary">Earn</button>
+            <button mat-raised-button (click)="reset()">Reset</button>
+        </div>
+    </form>
+</div>

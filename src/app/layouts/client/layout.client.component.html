@@ -1,0 +1,24 @@
+<body>
+    <header>
+        <app-client-header  (toogleSidebar)="SideBarToggler()"></app-client-header>
+    </header>
+    <mat-drawer-container class="mat-drawer-container">
+      <mat-drawer mode="side" [opened]="sidebarOpen" *ngIf="!deviceXs">
+        <app-client-sidebar></app-client-sidebar>
+      </mat-drawer>
+  
+      <mat-drawer mode="over" [opened]="sidebarOpen" *ngIf="deviceXs">
+        <app-client-sidebar></app-client-sidebar>
+      </mat-drawer>
+  
+      <mat-drawer-content>
+        <article>
+          <router-outlet></router-outlet>
+        </article>
+      </mat-drawer-content>
+    </mat-drawer-container>
+    <footer class="footer-container">
+      <app-footer></app-footer>
+    </footer>
+  </body>
+  

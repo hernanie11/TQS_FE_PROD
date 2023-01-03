@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="title-container">
+        <div class="title">
+            <button mat-icon-button (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <div class="title">
+                Redeem Points
+            </div>
+        </div>
+        <div class="sub-title">{{getStoreName()}}</div>
+    </div>
+
+
+    <form class="form-container" [formGroup]="redeemForm">
+        <mat-form-field appearance="legacy" *ngIf="buttonName == 'Redeem'">
+            <mat-label>Enter Mobile Number</mat-label>
+            <input (focusout)="focusMobileNumber()" [specialCharacters]="[ '[' ,']' , '-' ]" mask="0000-000-0000" formControlName="mobile_number"
+                (keydown.enter)="checkMobileNumber()" matInput autocomplete="off" #txtMobileNumber cdkFocusInitial>
+        </mat-form-field>
+        <mat-progress-bar *ngIf="isValidating" mode="buffer"></mat-progress-bar>
+
+        <div class="earned-points" *ngIf="isMobileNumberExists && buttonName == 'Redeem'">
+            <div>Available Cleared Points</div>
+            <div>{{totalClearedPoints | currency: ' '}}</div>
+        </div>
+
+        <mat-form-field appearance="legacy" *ngIf="isMobileNumberExists && buttonName == 'Redeem'">
+            <mat-label>Redeem Points</mat-label>
+            <input #txtRedeemPoints formControlName="redeemPoints" [OnlyNumber] matInput autocomplete="off">
+        </mat-form-field>
+
+
+        <div class="actions" *ngIf="isMobileNumberExists && buttonName == 'Redeem'">
+            <button mat-raised-button class="btn-primary" [disabled]="validateForm()"
+                (click)="redeem()">{{buttonName}}</button>
+            <button mat-raised-button (click)="reset()">Reset</button>
+        </div>
+
+        <div *ngIf="buttonName == 'Redeemed'" class="redeemed-result">
+            <div class="row">
+                <label class="key">Available Points</label>
+                <label class="key">Redeemed Points</label>
+                <label class="key">Remaining Available Points</label>
+            </div>
+            <div class="row">
+                <label class="key">:</label>
+                <label class="key">:</label>
+                <label class="key">:</label>
+            </div>
+            <div class="row">
+                <label class="value">{{totalClearedPoints | currency:' '}}</label>
+                <label class="value">{{redeemForm.value.redeemPoints | currency:' '}}</label>
+                <label class="value">{{remainingAvailablePoints() | currency:' '}}</label>
+            </div>
+        </div> 
+        <div class="token" *ngIf="buttonName == 'Redeemed'">
+            <div class="token-actions">
+                <button mat-icon-button [cdkCopyToClipboard]="referenceNo" (click)="copy()">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+            </div>
+            <div class="field-token">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Referrence #</mat-label>
+                    <textarea matInput autocomplete="off" [value]="referenceNo" readonly></textarea>
+                  </mat-form-field>
+            </div>
+        </div>
+        <div class="token" *ngIf="buttonName == 'Redeemed'">
+            <div class="token-actions">
+                <button mat-icon-button [cdkCopyToClipboard]="redeemForm.value.mobile_number" (click)="copy()">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+            </div>
+            <div class="field-token">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Mobile #</mat-label>
+                    <textarea matInput autocomplete="off" [value]="redeemForm.value.mobile_number" readonly></textarea>
+                  </mat-form-field>
+            </div>
+        </div>
+        <div class="ok" *ngIf="buttonName == 'Redeemed'" (click)="ok()">
+            OK
+        </div>
+    </form>
+</div>

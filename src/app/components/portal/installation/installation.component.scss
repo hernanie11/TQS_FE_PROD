@@ -1,0 +1,74 @@
+@import "../../../shared/scss/theme";
+#container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    ::ng-deep .mat-horizontal-stepper-header{
+        pointer-events: none !important;
+    }
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+            width: 200px;
+        }
+    }
+    .note {
+        letter-spacing: 1px;
+    }
+    .stepper {
+        letter-spacing: 1px;
+        .fields {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+            mat-form-field {
+                width: 300px;
+            }
+            margin-top: 20px;
+            .token-invalid {
+                color: red;
+            }
+        }
+        .import-db-field {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+            mat-form-field {
+                width: 350px;
+            }
+            margin-top: 20px;
+        }
+        .hint-no-internet {
+            color: red;
+        }
+        .upload-progress-bar {
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .actions {
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+        }
+        
+    }
+    .login-to {
+        color: $secondary;
+    }
+    
+}

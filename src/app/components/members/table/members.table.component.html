@@ -1,0 +1,137 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <!-- <button mat-raised-button class="btn-new btn-primary" (click)="newMember()">
+            New
+        </button> -->
+        <button class="btn-new" mat-raised-button color="accent" (click)="upload()">
+            Upload
+        </button>
+
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus (keydown.enter)="searchMember()">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                    <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+                </div>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell class="id" *matCellDef="let member"> {{member.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_name">
+                        <th mat-header-cell *matHeaderCellDef> First Name </th>
+                        <td mat-cell class="first-name" *matCellDef="let member"> {{member.first_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                        <td mat-cell class="last-name" *matCellDef="let member"> {{member.last_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="gender">
+                        <th mat-header-cell *matHeaderCellDef> Gender </th>
+                        <td mat-cell class="gender" *matCellDef="let member"> {{member.gender}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="birthday">
+                        <th mat-header-cell *matHeaderCellDef> Birthday </th>
+                        <td mat-cell class="birthday" *matCellDef="let member"> {{member.birthday}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="barangay">
+                        <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                        <td mat-cell class="barangay" *matCellDef="let member"> {{member.barangay}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="municipality">
+                        <th mat-header-cell *matHeaderCellDef> Municipality </th>
+                        <td mat-cell class="municipality" *matCellDef="let member"> {{member.municipality}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="province">
+                        <th mat-header-cell *matHeaderCellDef> Province </th>
+                        <td mat-cell class="province" *matCellDef="let member"> {{member.province}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell class="email" *matCellDef="let member"> {{member.email}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mobile_number">
+                        <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+                        <td mat-cell class="mobile-number" *matCellDef="let member"> {{member.mobile_number}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell class="status" *matCellDef="let member">
+                            <label [class.status-changed]="member.hasChanged">{{member.status}}</label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="store_registered">
+                        <th mat-header-cell *matHeaderCellDef> Store Registered </th>
+                        <td mat-cell class="status" *matCellDef="let member">
+                            <label>{{member.store_registered}}</label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="created_at">
+                        <th mat-header-cell *matHeaderCellDef> Date Created </th>
+                        <td mat-cell class="date-created" *matCellDef="let member"> {{member.created_at | date: 'MMM dd, yyyy hh:mm:ss a'}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="actions" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell class="actions-menu" *matCellDef="let member">
+                            <button mat-icon-button [matMenuTriggerFor]="menu"
+                                aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="editMember(member.id)">
+                                    <span>Edit</span>
+                                </button>
+                                <ng-container *ngIf="member.status == 'Active'; else elseTemplate">
+                                    <button mat-menu-item (click)="activateInactivate('Deactivate', member)">
+                                        <span>Deactivate</span>
+                                    </button>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <button mat-menu-item (click)="activateInactivate('Activate', member)">
+                                        <span>Activate</span>
+                                    </button>
+                                </ng-template>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="13">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #memberPaginator showFirstLastButtons [length]="totalItems"
+                [pageSizeOptions]="pageSizeOption" [pageSize]="memberPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

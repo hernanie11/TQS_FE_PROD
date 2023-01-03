@@ -1,0 +1,105 @@
+@import "../../../shared/scss/theme";
+.container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    padding: 30px 50px;
+    grid-gap: 10px;
+  
+    .title-container {
+        grid-column: 1/25;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        grid-gap: 5px;
+        .title {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 24px;
+            font-weight:900;
+            letter-spacing: 1px;
+        }
+        .sub-title {
+            display: flex;
+            flex-direction: row;
+            padding-left: 40px;
+            color: $secondary;
+        }
+    }
+    
+    .body-container {
+        background-color: #1d1b1b;
+        grid-column: 1/25;
+        grid-row: 2;
+        min-height: calc(100vh - 250px);
+        border-radius: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        .menu-bar {
+            width: 95%;
+            margin: 20px;
+            mat-form-field {
+                width: 100%;
+            }
+        }
+
+        .table-container {
+            width: 95%;
+            th {
+                font-size: clamp(0.6rem, 0.8vw, 2rem); 
+            }
+            td {
+                font-size: clamp(0.6rem, 0.8vw, 2rem); 
+            }
+            .id {
+                min-width: 150px;
+            }
+            .mobile-number {
+                min-width: 200px;
+            }
+            .name {
+                min-width: 200px;
+            }
+            .gender {
+                min-width: 150px;
+            }
+            .birthday {
+                min-width: 150px;
+            }
+            .email {
+                min-width: 200px;
+            }
+            .address {
+                min-width: 150px;
+            }
+            .actions {
+                min-width: 150px;
+            }
+            
+        }
+        mat-paginator {
+            width: 95%;
+            margin-bottom: 20px;
+        }
+       
+    }
+
+ 
+
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+

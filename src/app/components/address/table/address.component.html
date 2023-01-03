@@ -1,0 +1,45 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <!-- <button mat-raised-button class="btn-new">Export to Excel</button> -->
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus (keyup)="applyFilter($event)">
+        </mat-form-field>
+    </div>
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                </div>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="Province">
+                        <th mat-header-cell *matHeaderCellDef> Province </th>
+                        <td mat-cell class="id" *matCellDef="let address"> {{address.province}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Municipality">
+                        <th mat-header-cell *matHeaderCellDef> Municipality </th>
+                        <td mat-cell class="first-name" *matCellDef="let address"> {{address.municipality}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Barangay">
+                        <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                        <td mat-cell class="last-name" *matCellDef="let address"> {{address.brgy}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="13">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #addressPaginator showFirstLastButtons [pageSizeOptions]="[5, 10, 15, 20]">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

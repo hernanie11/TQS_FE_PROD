@@ -1,0 +1,13 @@
+@import "./theme";
+
+.btn-primary {
+    background-color: $secondary;
+}
+
+.btn-accent {
+    background-color: $accent;
+}
+
+.btn-danger {
+    background-color: $warn;
+}

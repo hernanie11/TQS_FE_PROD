@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="title-container">
+        <div class="title">
+            <button mat-icon-button (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <div class="title">
+                Registration
+            </div>
+        </div>
+        <div class="sub-title">{{getStoreName()}}</div>
+
+    </div>
+    <div class="form-container">
+        <app-mobile-number *ngIf="membersRegisterServices.steps == 'Mobile Number'"></app-mobile-number>
+        <app-name *ngIf="membersRegisterServices.steps == 'Name'"></app-name>
+        <app-gender *ngIf="membersRegisterServices.steps == 'Gender'"></app-gender>
+        <app-birthday *ngIf="membersRegisterServices.steps == 'Birthday'"></app-birthday>
+        <app-address *ngIf="membersRegisterServices.steps == 'Address'"></app-address>
+        <app-email *ngIf="membersRegisterServices.steps == 'Email'"></app-email>
+        <app-working *ngIf="membersRegisterServices.steps == 'Working'"></app-working>
+        <app-cooking *ngIf="membersRegisterServices.steps == 'Cooking'"></app-cooking>
+        <app-overview *ngIf="membersRegisterServices.steps == 'Overview'"></app-overview>
+    </div>
+    <div class="steps-container">
+        <div class="row">
+            <div (click)="stepTo('Mobile Number')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Mobile Number', 'step' : membersRegisterServices.steps != 'Mobile Number' }">
+                MOBILE #
+            </div>
+            <div (click)="stepTo('Name')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Name', 'step' : membersRegisterServices.steps != 'Name' }">
+                NAME
+            </div>
+            <div (click)="stepTo('Gender')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Gender', 'step' : membersRegisterServices.steps != 'Gender' }">
+                GENDER </div>
+            <div (click)="stepTo('Birthday')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Birthday', 'step' : membersRegisterServices.steps != 'Birthday' }">
+                BIRTHDAY </div>
+            <div (click)="stepTo('Address')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Address', 'step' : membersRegisterServices.steps != 'Address' }">
+                ADDRESS </div>
+            <div (click)="stepTo('Email')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Email', 'step' : membersRegisterServices.steps != 'Email' }">
+                EMAIL </div>
+            <div (click)="stepTo('Working')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Working', 'step' : membersRegisterServices.steps != 'Working' }">
+                WORKING </div>
+            <div (click)="stepTo('Cooking')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Cooking', 'step' : membersRegisterServices.steps != 'Cooking' }">
+                COOKING </div>
+            <div (click)="stepTo('Overview')"
+                [ngClass]="{'current': membersRegisterServices.steps == 'Overview', 'step' : membersRegisterServices.steps != 'Overview' }">
+                OVERVIEW </div>
+        </div>
+    </div>
+</div>

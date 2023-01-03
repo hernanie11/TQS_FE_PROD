@@ -1,0 +1,33 @@
+<mat-toolbar id="container">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+    (click)="ToogleSideBar()">
+    <mat-icon class="menu">menu</mat-icon>
+  </button>
+  <span class="title">TQS</span>
+  <span class="example-spacer"></span>
+  <button mat-button [matMenuTriggerFor]="menu" class="menu">
+    {{credServices.getCredentials().client_user.first_name }} {{credServices.getCredentials().client_user.username }}
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <!-- <button mat-menu-item routerLink="/admin/settings">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button> -->
+    <button *ngIf="hasChangeStoreAccess" mat-menu-item (click)="changeStore()">
+      <mat-icon>login</mat-icon>
+      <span>Change Store &nbsp;</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <ng-container *ngIf="loggingOut; else elseTemplate">
+        <span>Logging Out...</span>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span>Logout</span>
+      </ng-template>
+
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

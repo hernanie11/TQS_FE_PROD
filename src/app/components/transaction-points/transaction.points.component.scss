@@ -1,0 +1,109 @@
+@import "../../shared/scss/theme";
+.container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    padding: 30px 50px;
+    grid-gap: 10px;
+  
+    .title-container {
+        grid-column: 1/25;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        grid-gap: 5px;
+        
+        .title {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            // font-size: 24px;
+            font-size: clamp(1rem, 1.3vw, 2rem); 
+            font-weight:900;
+            letter-spacing: 1px;
+        }
+        .sub-title {
+            display: flex;
+            flex-direction: row;
+            padding-left: 40px;
+            color: $secondary;
+            font-size: clamp(0.7rem, 1vw, 2rem); 
+        }
+    }
+    
+    .tab-container {
+        padding: 10px 0px;
+        background-color: hsl(0, 4%, 11%);
+        grid-column: 1/25;
+        grid-row: 2;
+        min-height: calc(100vh - 225px);
+        border-radius: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        mat-tab-group {
+            height: 100%;
+            width: 100%;
+            .tab-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                min-height: calc(100vh - 351px);
+                .search {
+                    width: 95%;
+                    margin: 10px 20px 0px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 10px;
+                    mat-form-field {
+                        margin-left: auto;
+                        width: 350px;
+                    }
+                    img {
+                        width: 25px;
+                        margin: 0px 5px;
+                    }
+                }
+                .table-container {
+                    th {
+                        font-size: clamp(0.7rem, 0.9vw, 2rem); 
+                    }
+                    td {
+                        font-size: clamp(0.7rem, 0.9vw, 2rem); 
+                    }
+                    width: 95%;
+                    .voided {
+                        text-decoration: line-through;
+                        color: red;
+                    }
+                    .transaction-no {
+                        min-width: 150px;
+                        min-height: 100px;
+                    }
+                    .mobile-number {
+                        min-width: 150px;
+                    }
+                    .name {
+                        min-width: 200px;
+                    }
+                    .bought-amount {
+                        min-width: 150px;
+                    }
+                    .earned-points {
+                        min-width: 150px;
+                    }
+                    .date-earned {
+                        min-width: 180px;
+                    }
+                }
+                mat-paginator {
+                    width: 95%;
+                }
+            }
+        }  
+    }
+}

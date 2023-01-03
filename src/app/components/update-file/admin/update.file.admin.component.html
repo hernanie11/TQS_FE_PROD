@@ -1,0 +1,56 @@
+<div class="container">
+
+    <form [formGroup]="fileUploadForm" (submit)="import()" enctype="multipart/form-data">
+        <mat-form-field appearance="legacy">
+            <mat-label>Select file to import</mat-label>
+            <ngx-mat-file-input (ngModelChange)="onFileSelected()" [multiple]="true" color="accent" accept=".json"
+                formControlName="storeFiles">
+            </ngx-mat-file-input>
+        </mat-form-field>
+
+        <div class="details" *ngIf="selectedFiles.length > 0">
+            Total selected files: {{selectedFiles.length}}
+        </div>
+        <div class="table" *ngIf="selectedFiles.length > 0">
+            <table #tblFiles mat-table [dataSource]="selectedFiles">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let file"> 
+                        <label [class.done]="file.isDone">{{file.name}}</label>    
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let file"> 
+                        <ng-container *ngIf="file.isDone; else elseTemplate">
+                            <label [class.done]="file.isDone">Done</label>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            Pending
+                        </ng-template>
+                            
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+
+
+        <div class="select-file-actions">
+            <button [disabled]="isUploading || !fileUploadForm.valid || buttonUpload != 'Upload'" mat-raised-button
+                class="btn-primary">
+                {{buttonUpload}}
+            </button>
+            <button type="button" (click)="cancelOrReset()" mat-raised-button>{{buttonCancel}}</button>
+        </div>
+        <!-- <mat-progress-bar *ngIf="isUploading" color="accent" mode="buffer"></mat-progress-bar> -->
+        <div class="progress-container" *ngIf="isUploading || buttonUpload == 'Uploaded'">
+            <div class="percentage">{{ insertedFiles }}/{{selectedFiles.length}}</div>
+            <mat-progress-bar mode="determinate" color="accent" [value]="uploadingPercentage"></mat-progress-bar>
+            <div class="percentage">{{uploadingPercentage | currency: ' '}}%</div>
+        </div>
+
+    </form>
+</div>

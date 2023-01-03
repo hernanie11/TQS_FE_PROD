@@ -1,0 +1,13 @@
+@import "../../scss/theme";
+#container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 3px;
+    font-weight: 100;
+    background-color: #404040;
+    padding-right: 10px;
+    
+    
+}

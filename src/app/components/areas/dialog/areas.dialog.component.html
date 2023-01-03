@@ -1,0 +1,44 @@
+<div *ngIf="data.action == 'CreateArea'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Area</mat-label>
+            <input [(ngModel)]="area" matInput autocomplete="off" class="upper-case" (keydown.enter)="createArea()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button (click)="createArea()" mat-raised-button class="btn-primary" [disabled]="isAreaCreating || validateCreate()"
+            [class.spinner]="isAreaCreating">{{buttonCreate}}</button>
+        <button mat-raised-button (click)="cancelCreate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'UpdateArea'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Store Code</mat-label>
+            <input [(ngModel)]="area" matInput autocomplete="off" class="upper-case" (keydown.enter)="updateArea()">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isUpdatingArea || validateUpdate()"
+            [class.spinner]="isUpdatingArea" (click)="updateArea()">{{buttonUpdate}}</button>
+        <button mat-raised-button (click)="cancelUpdate()">Cancel</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'DeleteArea'" class="dialog-container-size">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <mat-dialog-content class="dialog-content">
+    {{data.question}}
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" [disabled]="isDeletingArea"
+            [class.spinner]="isDeletingArea" (click)="deleteArea()">{{buttonDelete}}</button>
+        <button mat-raised-button (click)="cancelDelete()">Cancel</button>
+    </mat-dialog-actions>
+</div>

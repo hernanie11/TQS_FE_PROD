@@ -1,0 +1,172 @@
+<app-admin-container [title]="title">
+    <div actions class="actions">
+        <!-- <button mat-raised-button color="accent" (click)="upload()" class="btn-upload">
+            Upload
+        </button>
+        <button mat-raised-button (click)="clearEarnedPoints()" [disabled]="validateClearedPoints()">Add to Cleared Points</button> -->
+
+        <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchValue" autofocus
+                (keydown.enter)="searchEarnedPoints(false)">
+            <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div table class="table">
+        <div class="main-table-container">
+            <div class="table-container">
+                <div class="example-loading-shade" *ngIf="isTableLoading">
+                    <!-- <mat-spinner *ngIf="isTableLoading"></mat-spinner> -->
+                </div>
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell class="select" *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell class="id" *matCellDef="let member">
+                        <label [class.voided] = "member.deleted_at != null">{{member.id}}</label>    
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="branch_code">
+                        <th mat-header-cell *matHeaderCellDef> Branch Code </th>
+                        <td mat-cell class="category" *matCellDef="let member">
+                        <label [class.voided] = "member.deleted_at != null">{{member.code}}</label>    
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="store">
+                        <th mat-header-cell *matHeaderCellDef> Branch Name </th>
+                        <td mat-cell class="category" *matCellDef="let member">
+                        <label [class.voided] = "member.deleted_at != null">{{member.store_name}}</label>    
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="transaction_no">
+                        <th mat-header-cell *matHeaderCellDef> Receipt # </th>
+                        <td mat-cell class="transaction-no" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null">{{member.transaction_no}} </label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef> Category </th>
+                        <td mat-cell class="category" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null">{{member.category}}</label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_name">
+                        <th mat-header-cell *matHeaderCellDef> First Name </th>
+                        <td mat-cell class="first-name" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null">{{member.first_name}}</label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+                        <td mat-cell class="last-name" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null">{{member.last_name}}</label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="points_earn">
+                        <th mat-header-cell *matHeaderCellDef> Earned Points </th>
+                        <td mat-cell class="points-earn" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null">{{member.points_earn}}</label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="transaction_datetime">
+                        <th mat-header-cell *matHeaderCellDef> Earned Date </th>
+                        <td mat-cell class="transaction-datetime" *matCellDef="let member">
+                            <label [class.voided] = "member.deleted_at != null">{{member.transaction_datetime | date: "MMM d, yyyy hh:mm:ss a"}} </label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mobile_number">
+                        <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+                        <td mat-cell class="mobile-number" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null"> {{member.mobile_number }} </label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef> Amount </th>
+                        <td mat-cell class="amount" *matCellDef="let member"> 
+                            <label [class.voided] = "member.deleted_at != null"> {{member.amount | currency:' '}} </label> 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell class="status" *matCellDef="let member">
+                            <label [class.status-changed]="member.hasChanged">
+                                <ng-container *ngIf="member.deleted_at != null; else elseTemplate">
+                                    Voided
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    
+                                </ng-template>
+                                
+                            </label>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="created_at">
+                        <th mat-header-cell *matHeaderCellDef> Date Created </th>
+                        <td mat-cell class="created-at" *matCellDef="let member"> {{member.created_at | date}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="actions" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell class="actions" *matCellDef="let member">
+                            <button *ngIf="member.deleted_at == null" mat-icon-button [matMenuTriggerFor]="menu"
+                                aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="void(member.id)">
+                                    <span>Void</span>
+                                  </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="selection.toggle(row)"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td colspan="13">
+                            <div class="no-data">
+                                {{lblLoading}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator color="accent" #earnedPointsPaginator showFirstLastButtons [length]="totalMembers"
+                [pageSizeOptions]="pageSizeOption" [pageSize]="earnedPointsPerPage" (page)="onChangePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</app-admin-container>

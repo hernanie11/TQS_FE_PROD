@@ -1,0 +1,18 @@
+@import "../../scss/theme";
+.example-spacer {
+  flex: 1 1 auto;
+}
+#container {
+  background-color: $secondary;
+  .title {
+    color: #424242;
+    // color: white;
+  }
+  .menu {
+    color:$bgColor;
+    // color: white;
+  }
+  .logging-out {
+    font-weight: 400;
+  }
+}

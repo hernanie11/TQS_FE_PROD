@@ -1,0 +1,69 @@
+@import "../../shared/scss/theme";
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .btn-new {
+        margin-left: 20px;
+    }
+    mat-form-field {
+        margin-left: auto;
+        margin-right: 20px;
+        width: 300px;
+        width: 250px;
+        color: white;
+    }
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 20px;
+    .status-changed {
+        padding: 2px;
+        border-radius: 5px;
+        background-color: $secondary;
+        color: white;
+    }
+    .password-reset-icon {
+        position: relative;
+        top: 6px;
+    }
+
+    .id {
+        min-width: 40px;
+    }
+    .code {
+        min-width: 100px;
+    }
+    .store-name {
+        min-width: 100px;
+    }
+    .area {
+        min-width: 100px;
+    }
+    .region {
+        min-width: 100px;
+    }
+    .cluster {
+        min-width: 100px;
+    }
+    .business-model {
+        min-width: 100px;
+    }
+    .status {
+        min-width: 100px;
+    }
+    .date-created {
+        min-width: 100px;
+    }
+    .actions-menu {
+        min-width: 100px;
+    }
+
+}
+

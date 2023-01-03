@@ -1,0 +1,23 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <img src="../../../../assets/sidebar-logo/q_system_logo6.png" alt="">
+  </div>
+  <mat-divider></mat-divider>
+  <!-- <div class="profile">
+      <div class="name ">H! {{credServices.getCredentials().client_user.first_name}} {{credServices.getCredentials().client_user.last_name}}</div>
+      <div class="role ">{{credServices.getCredentials().client_user.role }}</div>
+    </div> -->
+  <mat-nav-list class="menu-container">
+    <mat-list-item routerLink="/client/transactions">
+      <mat-icon class="selected-icon" mat-list-icon>dashboard</mat-icon> Modules
+    </mat-list-item>
+
+    <mat-list-item routerLink="/client/transactions/generate-file" *ngIf="helperServices.hasAccess('generate-file')">
+      <mat-icon class="selected-icon" mat-list-icon>download</mat-icon> Generate File
+    </mat-list-item>
+
+    <mat-list-item routerLink="/client/transactions/update-file" *ngIf="helperServices.hasAccess('update-file')">
+      <mat-icon class="selected-icon" mat-list-icon>upload</mat-icon> Update File
+    </mat-list-item>
+  </mat-nav-list>
+</mat-nav-list>

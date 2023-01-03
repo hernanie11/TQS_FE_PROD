@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "first_name": "Philip",
+        "last_name": "Mendoza",
+        "points_redeemed": 10,
+        "store": "FO Apalit",
+        "date_redeemed": "July 10, 2021 8:00 am"
+    },
+    {
+        "id": 2,
+        "first_name": "Joshua",
+        "last_name": "Mendoza",
+        "points_redeemed": 5,
+        "store": "FO Apalit",
+        "date_redeemed": "July 09, 2021 11:52 am"
+    },
+    {
+        "id": 3,
+        "first_name": "Phil",
+        "last_name": "Mendoza",
+        "points_redeemed": 23,
+        "store": "FO Apalit",
+        "date_redeemed": "July 09, 2021 11:52 am"
+    },
+    {
+        "id": 4,
+        "first_name": "Josh",
+        "last_name": "Mendoza",
+        "points_redeemed": 19,
+        "store": "FO Apalit",
+        "date_redeemed": "July 09, 2021 11:52 am"
+    },
+    {
+        "id": 5,
+        "first_name": "Sample",
+        "last_name": "Mendoza",
+        "points_redeemed": 19,
+        "store": "FO Apalit",
+        "date_redeemed": "July 09, 2021 11:52 am"
+    }
+]

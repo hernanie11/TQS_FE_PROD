@@ -1,0 +1,359 @@
+<div *ngIf="data.action == 'createMember'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="create()" mat-raised-button class="btn-primary" [disabled]="isButtonLoading"
+      [class.spinner]="isButtonLoading">{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'updateMember'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="update()" mat-raised-button class="btn-primary" [disabled]="isButtonLoading"
+      [class.spinner]="isButtonLoading">{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'activeInActive'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <div class="user-info">
+    <ul>
+      <li>ID</li>
+      <li>First Name</li>
+      <li>Last Name</li>
+      <li>Gender</li>
+    </ul>
+
+    <ul class="separator">
+      <li> : </li>
+      <li> : </li>
+      <li> : </li>
+      <li> : </li>
+    </ul>
+
+    <ul class="separator">
+      <li>{{data.member.id}}</li>
+      <li>{{data.member.first_name}}</li>
+      <li>{{data.member.last_name}}</li>
+      <li>{{data.member.gender}}</li>
+    </ul>
+  </div>
+  <mat-dialog-actions align="end">
+    <button (click)="ActivateInActive()" mat-raised-button class="btn-primary" [disabled]="isButtonLoading"
+      [class.spinner]="isButtonLoading">{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'discardChanges'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="discard()" mat-raised-button class="btn-primary" [disabled]="isButtonLoading"
+      [class.spinner]="isButtonLoading">{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'import-members-validation'" class="import-members" [class.dialog-large-size]="excelData.length > 0">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    <div class="container">
+      <form [formGroup]="fileUploadForm" (submit)="import()" enctype="multipart/form-data">
+        <mat-form-field appearance="legacy">
+          <mat-label>Select member to import</mat-label>
+          <ngx-mat-file-input color="accent" accept=".xlsx, .csv" formControlName="memberExcelFile">
+          </ngx-mat-file-input>
+        </mat-form-field>
+       <div class="select-file-actions">
+        <button  mat-raised-button class="btn-primary" [disabled]="fileUploadForm.value.memberExcelFile == null || isConvertingToJson || buttonImport == 'Done'">
+          {{buttonImport}}
+        </button>
+        <button mat-raised-button (click)="cancel()">{{buttonCancel}}</button>
+       </div>
+      </form>
+
+      <div class="member-table-container" *ngIf="excelData.length > 0">
+        <div class="title">Importing Members</div>
+        <!-- <div class="table mat-elavation-z8">
+          <mat-form-field appearance="legacy" color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input autocomplete="off">
+          </mat-form-field>
+          <table #tblMembers mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="errors">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button color="warn" [matTooltip]=fetchErrors() matTooltipClass="tooltip-red" *ngIf="allErrors.length > 0">
+                  <mat-icon>error</mat-icon>
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let member">
+                <button mat-icon-button color="warn" *ngIf="member.error.length > 0" [matTooltip]=member.error.join()
+                  matTooltipClass="tooltip-red">
+                  <mat-icon>error</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="row">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let member"> {{member.row}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="first_name">
+              <th mat-header-cell *matHeaderCellDef> First Name </th>
+              <td mat-cell *matCellDef="let member">
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field">
+                    <mat-label>First Name</mat-label>
+                    <input matInput autocomplete="off" [(ngModel)]=member.first_name class="capitalize">
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.first_name}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="last_name">
+              <th mat-header-cell *matHeaderCellDef> Last Name </th>
+              <td mat-cell *matCellDef="let member"> 
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput autocomplete="off" [(ngModel)]=member.last_name class="capitalize">
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.last_name}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gender">
+              <th mat-header-cell *matHeaderCellDef> Gender </th>
+              <td mat-cell *matCellDef="let member"> 
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" class="table-field">
+                    <mat-label>Gender</mat-label>
+                    <mat-select [(ngModel)]=member.gender>
+                      <mat-option value="male">Male</mat-option>
+                      <mat-option value="female">Female</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.gender}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="birthday">
+              <th mat-header-cell *matHeaderCellDef> Birthday </th>
+              <td mat-cell *matCellDef="let member"> 
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" class="table-field" color="accent">
+                    <mat-label>Birthday</mat-label>
+                    <input matInput [matDatepicker]="picker"  [(ngModel)]=member.birthday>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.birthday | date}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="barangay">
+              <th mat-header-cell *matHeaderCellDef> Barangay </th>
+              <td mat-cell *matCellDef="let member"> 
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field">
+                    <mat-label>Barangay</mat-label>
+                    <input matInput autocomplete="off" [(ngModel)]=member.barangay class="capitalize">
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.barangay}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="municipality">
+              <th mat-header-cell *matHeaderCellDef> Municipality </th>
+              <td mat-cell *matCellDef="let member"> 
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field">
+                    <mat-label>Municipality</mat-label>
+                    <input matInput autocomplete="off" [(ngModel)]=member.municipality class="capitalize">
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.municipality}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="province">
+              <th mat-header-cell *matHeaderCellDef> Province </th>
+              <td mat-cell *matCellDef="let member"> 
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field">
+                    <mat-label>Province</mat-label>
+                    <input matInput autocomplete="off" [(ngModel)]=member.province class="capitalize">
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.province}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let member">
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field email">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput autocomplete="off" [(ngModel)]=member.email>
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.email}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="mobile_number">
+              <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+              <td mat-cell *matCellDef="let member">
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <mat-form-field appearance="legacy" color="accent" class="table-field mobile_number">
+                    <mat-label>Mobile Number</mat-label>
+                    <input maxlength="11" [OnlyNumber] matInput autocomplete="off" [(ngModel)]=member.mobile_number>
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  {{member.mobile_number}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button (click)="editAll()">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let member">
+                <ng-container *ngIf="member.isEdit; else elseTemplate">
+                  <button 
+                    mat-icon-button 
+                    (click)="ok(member.row)"
+                    [disabled]="validateMember(member)"
+                    >
+                    <mat-icon>done</mat-icon>
+                  </button>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  <button mat-icon-button (click)="edit(member.row)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </ng-template>
+                <button mat-icon-button (click)="remove(member.row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div> -->
+        <div class="importing-progress">
+          <div class="imported-count">
+            <!-- <label>
+              {{importedCount | number}}/{{excelData.length | number}}
+            </label> -->
+          </div>
+          {{currentUploading}} / {{totalMembers}}
+          <mat-progress-bar mode="determinate" [value]="importedPercentage"></mat-progress-bar>
+          <!-- <mat-progress-bar mode="buffer" *ngIf="isConvertingToJson"></mat-progress-bar> -->
+          <div class="percentage-container">
+            <div>
+              Failed to Import Count: {{failedToImported.length | number}} 
+              <button (click)="downloadErrors()" matTooltip="Download to excel" mat-icon-button [disabled]="importedPercentage != 100">
+                <mat-icon>file_download</mat-icon>
+              </button>
+            </div>
+            <div class="percentage">{{importedPercentage | currency: ' '}}%</div>
+          </div>
+        </div>
+        <div class="actions">
+          <!-- <button 
+            mat-raised-button 
+            color="accent" 
+            *ngIf="!allFieldAreFillUp() && checkDuplicateMobileNumbers().duplicateMobileNumbers.length == 0"
+            (click)="validateMembers()"
+            [disabled]="isValidating || checkIfEditingTable()"
+            [class.spinner]= "isValidating"
+            >{{btnValidate}}</button>
+          <button *ngIf="readyToUpload" [disabled]="validateUploadMembers() || checkIfEditingTable()" mat-raised-button class="btn-primary" (click)="uploadMembers()">Upload Members</button>
+          <button mat-raised-button mat-dialog-close>Cancel</button> -->
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.action == 'import-members'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="importMembers()" mat-raised-button class="btn-primary" [disabled]="isButtonLoading"
+      [class.spinner]="isButtonLoading">{{btnImport}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'createMemberInStore'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="createMemberInStore()" mat-raised-button class="btn-primary" [disabled]="isCreatedMemberInStore"
+      [class.spinner]="isCreatedMemberInStore">{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.action == 'return-to-transactions'" class="dialog-container-size">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content class="mat-typography">
+    {{data.question}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="back()" mat-raised-button class="btn-primary" >{{data.button_name}}</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

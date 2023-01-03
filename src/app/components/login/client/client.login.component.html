@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="form-container">
+        <div class="form">
+            <div class="title">Log In</div>
+            <form class="fields" [formGroup]="loginForm" (submit)="login()">
+                <mat-form-field appearance="legacy" color="accent">
+                    <mat-label>Username</mat-label>
+                    <input autofocus matInput autocomplete="off" formControlName="username">
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button type="submit" class="btn-login btn-primary" mat-raised-button>LOGIN</button>
+            </form>
+            <div class="mis-logo">
+                <img src="../../../../assets/logo/MIS_LOGO.png" alt="">
+            </div>
+        </div>
+        <div class="picture">
+            <img src="../../../../assets/sidebar-logo/q_system_logo6.png" alt="">
+            <!-- <div class="version">
+               <span class="version">{{version}}</span>
+            </div> -->
+        </div>
+    </div>
+    <span style="position:absolute; left:1rem; bottom: 1rem; font-style: italic;">{{version}}</span>
+</div>

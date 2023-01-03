@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="title">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">table</mat-icon>
+      {{title}}
+    </div>
+    <div class="actions">
+      <button mat-raised-button [disabled]="validateActions()" class="btn-primary" (click)="exportToExcel()">Export to Excel</button>
+      <button mat-raised-button [disabled]="validateActions()" class="btn-accent" (click)="exportToCSV()">Export to CSV</button>
+      <button mat-raised-button [disabled]="validateActions()" (click)="copyToClipboard()" [cdkCopyToClipboard]="stringtifyDataSource()">Copy to Clipboard</button>
+      <mat-form-field appearance="legacy" class="search" color="accent">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" (keyup)="applyFilter($event)" autocomplete="off">
+      </mat-form-field>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="reportsServices.clearedPointsReportDataSource">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell class="id" *matCellDef="let clearedPoint"> {{clearedPoint.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell class="first-name" *matCellDef="let clearedPoint"> {{clearedPoint.first_name}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell class="last-name" *matCellDef="let clearedPoint"> {{clearedPoint.last_name}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="clearedPoints">
+          <th mat-header-cell *matHeaderCellDef> Cleared Points </th>
+          <td mat-cell class="earned-points" *matCellDef="let clearedPoint"> {{clearedPoint.total_cleared_points}} </td>
+        </ng-container>
+  
+    
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+    </div>
+    <mat-paginator #earnedPointsPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>

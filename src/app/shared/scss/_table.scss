@@ -1,0 +1,45 @@
+@import "../scss/theme";
+.main-table-container {
+    position: relative;
+    width: 100%;
+}
+.table-container {
+    overflow: auto;
+    min-height: auto;
+    max-height: 313px;
+    table {
+        width: 100%;
+        max-width: 100%;
+        text-transform: uppercase;
+    }
+    .no-data {
+        text-align: center;
+        font-weight: 100;
+        font-size: 16px;
+        padding: 30px;
+    }
+    // .mat-cell {
+    //     text-align: center;
+    // }
+   
+}
+.example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-paginator {
+    width: 100%;
+}
+
+mat-progress-spinner circle, .mat-spinner circle {
+    stroke: $secondary;
+}

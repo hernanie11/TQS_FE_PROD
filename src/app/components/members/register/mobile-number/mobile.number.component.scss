@@ -1,0 +1,66 @@
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .field {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        .title {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+    }
+
+    .border {
+        width: 1px;
+        border: 1px solid gray;
+        height: 80%;
+        align-self: center;
+        background-color: gray;
+        @media only screen and (max-width: 1195px) {
+            display: none;
+        }
+    }
+    .keypad  {
+        @media only screen and (max-width: 1195px) {
+            display: none;
+        }
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            
+            button {
+                height: 50px;
+                width: 50px;
+                font-size: 24px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        button {
+            width: 150px;
+        }
+    }
+}

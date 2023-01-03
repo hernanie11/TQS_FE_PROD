@@ -1,0 +1,68 @@
+@import "../../../shared/scss/theme";
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    .title {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        mat-icon {
+            color: $secondary;
+        }
+    }
+    .actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        button {
+            width: 200px;
+        }
+        .search {
+            margin-left: auto;
+            width: 300px;
+            @media only screen and (max-width: 1225px) {
+               width: 100%;
+            }
+
+        }
+        @media only screen and (max-width: 1225px) {
+            margin-top: 10px;
+        }
+        @media only screen and (max-width: 704px) {
+            button {
+                width: 100%;
+            }
+         }
+
+    }
+    
+
+    table {
+        .id {
+          min-width: 40px;  
+        }
+        .first-name {
+            min-width: 100px;
+        }
+        .last-name {
+            min-width: 100px;
+        }
+        .store {
+            min-width: 100px;
+        }
+        .points-redeemed {
+            min-width: 120px;
+        }
+        .date-redeemed {
+            min-width: 220px;
+        }
+      
+    }
+    
+}
