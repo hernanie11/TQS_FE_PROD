@@ -28,6 +28,7 @@ export class ReportsRedeemedPointsComponent {
     "lastName",
     "store",
     "pointsRedeemed",
+    "transaction_no",
     "dateRedeemed",
     "isVoided",
     "voidedAt"
@@ -46,18 +47,18 @@ export class ReportsRedeemedPointsComponent {
     let reportData = {
       title: `(${this.reportsServices.selectedReport}) - (${this.reportsServices.selectedBasedDateRange}) - (From: ${new Date(this.reportsServices.selectedDateRange.start).toLocaleDateString()} - To: ${new Date(this.reportsServices.selectedDateRange.end).toLocaleDateString()})`,
       data: dataForExcel,
-      headers: ["ID", "Mobile Number", "First Name", "Last Name", "Store", "Redeemed Points",  "Redeemed Date", "Void Status", "Date Voided"],
+      headers: ["ID", "Mobile Number", "First Name", "Last Name", "Store", "Redeemed Points", "Transaction_no",  "Redeemed Date", "Void Status", "Date Voided"],
       columnColorNumber: 8,
       titleMergeCell: {
         from: 'A1',
-        to: 'I2'
+        to: 'J2'
       }
     }
     this.helperServices.exportExcel(reportData)
   }
 
   copyToClipboard() {
-    this.snackbar.open("Earned Points copied to clipboard", "", { duration: 3000 })
+    this.snackbar.open("Redeemed Points copied to clipboard", "", { duration: 3000 })
   }
 
   stringtifyDataSource() {
@@ -72,10 +73,10 @@ export class ReportsRedeemedPointsComponent {
     let reportData = {
       title: `(${this.reportsServices.selectedReport}) - (${this.reportsServices.selectedBasedDateRange}) - (From: ${new Date(this.reportsServices.selectedDateRange.start).toLocaleDateString()} - To: ${new Date(this.reportsServices.selectedDateRange.end).toLocaleDateString()})`,
       data: dataForExcel,
-      headers: ["ID", "Mobile Number", "First Name", "Last Name", "Store", "Redeemed Points", "Redeemed Date", "Void Status", "Date Voided"],
+      headers: ["ID", "Mobile Number", "First Name", "Last Name", "Store", "Redeemed Points", "Transaction_no", "Redeemed Date", "Void Status", "Date Voided"],
       titleMergeCell: {
         from: 'A1',
-        to: 'I2'
+        to: 'J2'
       }
     }
     this.helperServices.exportCSV(reportData)

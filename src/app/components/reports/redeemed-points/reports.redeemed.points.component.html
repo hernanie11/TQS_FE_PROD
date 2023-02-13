@@ -43,6 +43,11 @@
           <th mat-header-cell *matHeaderCellDef> Points Redeemed </th>
           <td mat-cell class="points-redeemed" *matCellDef="let redeemedPoint"> {{redeemedPoint.points_redeemed}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="transaction_no">
+          <th mat-header-cell *matHeaderCellDef> Transaction_no </th>
+          <td mat-cell class="points-redeemed" *matCellDef="let redeemedPoint"> {{redeemedPoint.reference_no}} </td>
+        </ng-container>
       
         <ng-container matColumnDef="dateRedeemed">
           <th mat-header-cell *matHeaderCellDef> Date Redeemed </th>

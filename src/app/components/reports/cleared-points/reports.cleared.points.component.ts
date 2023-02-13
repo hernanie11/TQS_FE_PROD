@@ -25,6 +25,7 @@ export class ReportClearedPointsComponent {
         'id',
         'firstName',
         'lastName',
+        'mobileNumber',
         'clearedPoints',
     ];
     @ViewChild("earnedPointsPaginator") paginator: MatPaginator;
@@ -48,11 +49,11 @@ export class ReportClearedPointsComponent {
         let reportData = {
             title: `(${this.reportsServices.selectedReport}) - (${this.reportsServices.selectedBasedDateRange}) - (From: ${new Date(this.reportsServices.selectedDateRange.start).toLocaleDateString()} - To: ${new Date(this.reportsServices.selectedDateRange.end).toLocaleDateString()})`,
             data: dataForExcel,
-            headers: ["ID", "First Name", "Last Name", "Cleared Points"],
-            columnColorNumber: 8,
+            headers: ["ID", "First Name", "Last Name", "Mobile Number", "Cleared Points"],
+            columnColorNumber: 9,
             titleMergeCell: {
                 from: 'A1',
-                to: 'D2'
+                to: 'E2'
             }
         }
         this.helperServices.exportExcel(reportData)
@@ -66,11 +67,11 @@ export class ReportClearedPointsComponent {
         let reportData = {
             title: `(${this.reportsServices.selectedReport}) - (${this.reportsServices.selectedBasedDateRange}) - (From: ${new Date(this.reportsServices.selectedDateRange.start).toLocaleDateString()} - To: ${new Date(this.reportsServices.selectedDateRange.end).toLocaleDateString()})`,
             data: dataForExcel,
-            headers: ["ID", "First Name", "Last Name", "Cleared Points"],
-            columnColorNumber: 8,
+            headers: ["ID", "First Name", "Last Name", "Mobile Number", "Cleared Points"],
+            columnColorNumber: 9,
             titleMergeCell: {
                 from: 'A1',
-                to: 'D2'
+                to: 'E2'
             }
         }
         this.helperServices.exportCSV(reportData)

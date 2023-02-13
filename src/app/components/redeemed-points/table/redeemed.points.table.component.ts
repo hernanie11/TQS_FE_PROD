@@ -34,8 +34,10 @@ export class RedeemedPointsTableComponent {
         "id",
         "first_name",
         "last_name",
+        "mobileNumber",
         "store",
         "points_redeemed",
+        "transaction_no",
         "date_redeemed",
         "actions",
 

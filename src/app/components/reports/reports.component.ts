@@ -131,6 +131,7 @@ export class ReportsComponent {
                         last_name: redeemedPoints.last_name,
                         name: redeemedPoints.name,
                         points_redeemed: redeemedPoints.points_redeemed,
+                        reference_no: redeemedPoints.reference_no,
                         created_at: moment(redeemedPoints.created_at).format("MMMM DD, yyyy hh:mm:ss a"),
                         void_status: redeemedPoints.void_status,
                         voided_at: redeemedPoints.voided_at != null ? moment(redeemedPoints.voided_at).format("MMMM DD, yyyy hh:mm:ss a") : null

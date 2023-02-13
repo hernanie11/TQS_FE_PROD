@@ -28,6 +28,11 @@
           <th mat-header-cell *matHeaderCellDef> Last Name </th>
           <td mat-cell class="last-name" *matCellDef="let clearedPoint"> {{clearedPoint.last_name}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="mobileNumber">
+          <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+          <td mat-cell class="last-name" *matCellDef="let clearedPoint"> {{clearedPoint.mobile_number}} </td>
+        </ng-container>
   
         <ng-container matColumnDef="clearedPoints">
           <th mat-header-cell *matHeaderCellDef> Cleared Points </th>
